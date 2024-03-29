@@ -1,6 +1,6 @@
 // Modal.js 파일
 import React, { useState } from 'react';
-import './modal.css';
+import './Modal.css';
 
 function Modal({ onClose, onSubmit, editData }) {
   const [formData, setFormData] = useState(editData);

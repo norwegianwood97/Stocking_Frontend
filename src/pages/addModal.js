@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './addmodal.css';
+import './Addmodal.css';
 
 function AddBoardModal({ isOpen, onClose, onSubmit }) {
   const [boardTitle, setBoardTitle] = useState('');
