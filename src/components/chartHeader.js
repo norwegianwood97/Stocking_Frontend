@@ -1,7 +1,7 @@
 // src/components/Header.js
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import './Header.css';
+import './chartHeader.css';
 
 const ChartHeader = () => {
   const COMPANY_IDS = ['company1', 'company2', 'company3'];
