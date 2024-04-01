@@ -147,7 +147,7 @@ const MainPage = () => {
           {renderStocksTable()}
         </div>
         <div className="Company">
-          <h1>회사 목록</h1>
+          <h1>종목 목록</h1>
           {renderCompaniesTable()}
         </div>
       </div>
