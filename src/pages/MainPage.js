@@ -10,6 +10,8 @@ const MainPage = () => {
     initialSeed: '1',
     tier: 'bronze',
   });
+  const [stocks, setStocks] = useState([]);
+  const [companies, setCompanies] = useState([]);
   useEffect(() => {
     // API 요청을 보내 사용자 정보를 가져옵니다.
     axios
@@ -24,6 +26,22 @@ const MainPage = () => {
           // 여기서 /login으로 리다이렉트합니다.
           window.location = '/login';
         }
+      });
+    axios
+      .get('/api/stock')
+      .then((response) => {
+        setStocks(response.data); // 받아온 주식 정보로 상태 업데이트
+      })
+      .catch((error) => {
+        console.error('There was an error fetching the stock data:', error);
+      });
+    axios
+      .get('/api/company')
+      .then((response) => {
+        setCompanies(response.data); // 받아온 회사 정보로 상태 업데이트
+      })
+      .catch((error) => {
+        console.error('There was an error fetching the company data:', error);
       });
   }, []); // 빈 배열을 넘겨주어 컴포넌트 마운트 시에만 요청을 보냅니다.
   const renderUserInfo = () => {
@@ -40,15 +58,69 @@ const MainPage = () => {
       </div>
     );
   };
+
+  const renderStocksTable = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>회사명</th>
+            <th>주식 수</th>
+            <th>현재가</th>
+            <th>평단가</th>
+            <th>수익률</th>
+          </tr>
+        </thead>
+        <tbody>
+          {stocks.map((stock) => {
+            const profitRate = ((stock.Company.currentPrice - stock.averagePrice) / stock.averagePrice) * 100;
+            return (
+              <tr key={stock.stockId}>
+                <td>{stock.Company.name}</td>
+                <td>{stock.quantity}</td>
+                <td>{stock.Company.currentPrice}원</td>
+                <td>{stock.averagePrice}원</td>
+                <td>{profitRate.toFixed(2)}%</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  };
+  const renderCompaniesTable = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>회사명</th>
+            <th>현재가</th>
+            <th>등락률</th>
+          </tr>
+        </thead>
+        <tbody>
+          {companies.map((company) => (
+            <tr key={company.companyId}>
+              <td>{company.name}</td>
+              <td>{company.currentPrice}원</td>
+              <td>{company.fluctuationRate.toFixed(2)}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
   return (
     <div className="MainPage">
       <div className="InfoRankingLike">
-        {renderUserInfo()}
-        <div className="Ranking">
+        <div className="Info">{renderUserInfo()}</div>
+        <div className="Stock">
           <h1>보유 주식</h1>
+          {renderStocksTable()}
         </div>
         <div className="Compnay">
           <h1>회사 목록</h1>
+          {renderCompaniesTable()}
         </div>
       </div>
     </div>
