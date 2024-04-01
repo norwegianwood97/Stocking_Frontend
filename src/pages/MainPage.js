@@ -19,8 +19,11 @@ const MainPage = () => {
         setUserInfo(response.data.data[0]);
       })
       .catch((error) => {
-        alert(error);
         console.error('There was an error fetching the user data:', error);
+        if (error.response && error.response.status === 401) {
+          // 여기서 /login으로 리다이렉트합니다.
+          window.location = '/login';
+        }
       });
   }, []); // 빈 배열을 넘겨주어 컴포넌트 마운트 시에만 요청을 보냅니다.
   const renderUserInfo = () => {
@@ -40,30 +43,12 @@ const MainPage = () => {
   return (
     <div className="MainPage">
       <div className="InfoRankingLike">
-        <div className="InfoRanking">
-          {renderUserInfo()}
-          <div className="Ranking">
-            <h1>랭킹</h1>
-          </div>
+        {renderUserInfo()}
+        <div className="Ranking">
+          <h1>보유 주식</h1>
         </div>
-        <div className="Like">
-          <h1>좋아요</h1>
-        </div>
-      </div>
-      <div className="CompanyBattle">
-        <div className="Company">
-          <h1>기업</h1>
-        </div>
-        <div className="Battle">
-          <h1>배틀</h1>
-        </div>
-      </div>
-      <div className="KOSPIKOSDAQ">
-        <div className="KOSPI">
-          <h1>코스피 </h1>
-        </div>
-        <div className="KOSDAQ">
-          <h1>코스닥</h1>
+        <div className="Compnay">
+          <h1>회사 목록</h1>
         </div>
       </div>
     </div>
