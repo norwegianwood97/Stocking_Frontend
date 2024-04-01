@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axiosInstance from '../api/axios.js';
 import { useNavigate } from 'react-router-dom';
-import './signupPage.css';
+import './SignupPage.css';
 
 function SignupPage() {
   const [nickname, setNickname] = useState('');
