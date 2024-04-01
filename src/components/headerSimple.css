@@ -1,30 +1,9 @@
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* 이 부분을 변경했습니다: 가운데 정렬 */
   align-items: center;
   padding: 10px;
-}
-
-.header img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-}
-.header-left,
-.header-center,
-.header-right {
-  flex: 1;
-  display: flex;
-  justify-content: center; /* 기본적으로 모두 중앙 정렬 */
-  align-items: center;
-}
-.header-left {
-  justify-content: flex-start; /* 왼쪽 정렬 */
-}
-
-.header-right {
-  justify-content: flex-end; /* 오른쪽 정렬 */
-  padding-right: 15px;
+  width: 100%; /* 헤더가 전체 너비를 차지하도록 설정 */
 }
 
 .header-center img {
@@ -40,7 +19,12 @@
   padding: 20px;
   z-index: 100;
   border-radius: 10px; /* 모서리를 둥글게 */
+  display: flex; /* 여기서부터 추가한 부분 */
+  flex-direction: column; /* 세로 방향으로 항목 정렬 */
+  align-items: center; /* 가로 방향으로 가운데 정렬 */
+  justify-content: center; /* 세로 방향으로 가운데 정렬 */
 }
+
 /* 헤더 내의 모든 이미지에 적용되는 스타일 */
 .header img {
   width: 80px; /* 너비 설정 */
