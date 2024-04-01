@@ -1,0 +1,6 @@
+.chart-and-order-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 90%; /* 혹은 다른 수치 */
+  margin: 0 auto; /* 가운데 정렬을 위한 마진  */
+}
