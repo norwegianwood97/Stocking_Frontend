@@ -162,7 +162,7 @@ const MyPage = () => {
   };
   const renderUserInfoUpdateForm = () => {
     return (
-      <form onSubmit={handleUserInfoUpdate}>
+      <form onSubmit={handleUserInfoUpdate} className="updateUserInfoForm">
         <h1>회원정보 수정</h1>
         <div>
           <label>변경할 닉네임</label>
