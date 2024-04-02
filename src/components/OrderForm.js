@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../api/axios.js';
 import './OrderForm.css';
 
 const OrderForm = () => {
@@ -8,13 +8,14 @@ const OrderForm = () => {
   const [priceType, setPriceType] = useState('market'); // 'market', 'limit', 'reservation'
   const [price, setPrice] = useState(''); // 지정가격
   const [quantity, setQuantity] = useState(''); // 구매 주식수
-  const { companyid } = useParams();
+  const { companyId } = useParams();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/order', {
-        companyid,
+      console.log(type);
+      const response = await axios.post('/api/order', {
+        companyId,
         type,
         price: priceType === 'limit' ? price : null,
         quantity,

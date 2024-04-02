@@ -1,46 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactEcharts from 'echarts-for-react';
 import { useParams } from 'react-router-dom';
 
 function Chart() {
-  const [series, setSeries] = useState([
-    {
-      name: 'Price',
-      data: [],
-    },
-  ]);
-  const { companyId } = useParams(); // URL 파라미터에서 companyId 추출
-  const [high, setHigh] = useState(null);
-  const [low, setLow] = useState(null);
+  const { companyId } = useParams();
+  const echartRef = useRef(null); // ECharts 인스턴스에 접근하기 위한 ref
 
   useEffect(() => {
     const ws = new WebSocket(`ws://localhost:8080?companyId=${companyId}`);
 
     ws.onmessage = (event) => {
-      // 서버로부터 받은 데이터 파싱
       const { currentPrice, initialPrice } = JSON.parse(event.data);
-      const currentTime = new Date().getTime(); // 현재 시간을 milliseconds로 가져옴
+      const currentTime = new Date().getTime();
 
-      // 고가 및 저가 업데이트
-      if (high === null || currentPrice > high) {
-        setHigh(currentPrice);
-      }
-      if (low === null || currentPrice < low) {
-        setLow(currentPrice);
-      }
+      // 새로운 데이터 포인트 생성
+      const newData = [currentTime, initialPrice, currentPrice, currentPrice, currentPrice];
 
-      // 데이터를 series 형식에 맞게 가공하여 업데이트
-      setSeries((prevSeries) => {
-        const newData = prevSeries[0].data.concat([[currentTime, initialPrice, currentPrice, low, high]]);
-        return [{ ...prevSeries[0], data: newData }];
-      });
+      // 차트 인스턴스에 접근하여 setOption 메서드로 데이터 업데이트
+      const echartInstance = echartRef.current.getEchartsInstance();
+      const option = echartInstance.getOption();
+      option.series[0].data.push(newData);
+
+      echartInstance.setOption(
+        {
+          series: [{ data: option.series[0].data }],
+        },
+        false
+      ); // notMerge를 false로 설정하여 기존 옵션에 데이터만 병합
     };
 
-    return () => ws.close(); // 컴포넌트 언마운트 시 WebSocket 연결 닫기
-  }, [companyId, high, low]);
+    return () => ws.close();
+  }, [companyId]);
 
-  // 차트 옵션 설정
-  const option = {
+  // 차트 초기 옵션 설정
+  const initialOption = {
     title: {
       text: '주식 가격 차트',
     },
@@ -60,15 +53,22 @@ function Chart() {
       {
         type: 'candlestick',
         name: '주식 가격',
-        data: series[0].data,
+        data: [],
+      },
+    ],
+    dataZoom: [
+      {
+        type: 'inside',
+        start: 0,
+        end: 100,
+        xAxisIndex: [0],
       },
     ],
   };
 
   return (
     <div style={{ width: '100%', height: '500px' }}>
-      {/* ReactEcharts 컴포넌트를 사용하여 차트를 렌더링합니다. */}
-      <ReactEcharts option={option} />
+      <ReactEcharts ref={echartRef} option={initialOption} />
     </div>
   );
 }
