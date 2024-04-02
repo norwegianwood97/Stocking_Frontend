@@ -10,6 +10,7 @@ const Header = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [nickname, setNickname] = useState('');
   const modalRef = useRef();
+  
   const navigate = useNavigate();
 
   // 모달 외부 클릭을 감지하는 함수
