@@ -1,0 +1,61 @@
+/* 호가창 컨테이너 스타일 */
+.orderBook {
+  text-align: center; /* 모든 텍스트 중앙 정렬 */
+}
+
+/* 테이블 스타일 */
+table {
+  margin-left: auto; /* 왼쪽 마진을 자동으로 설정하여 오른쪽으로 밀어냄 */
+  margin-right: auto; /* 오른쪽 마진을 자동으로 설정하여 왼쪽으로 밀어냄 */
+  width: 80%; /* 테이블의 너비를 전체 너비의 80%로 설정 */
+  min-width: 500px;
+}
+table thead th {
+  background-color: black; /* 테이블 헤더 배경색을 파란색으로 설정 */
+  color: white; /* 헤더의 글자색을 흰색으로 설정 */
+}
+
+/* 로딩 인디케이터 스타일 */
+.loading-indicator {
+  margin: 20px 0; /* 위 아래 마진 설정으로 좀 더 여백을 줌 */
+}
+.price-cell {
+  text-align: center; /* 금액을 가운데 정렬 */
+}
+
+.order-cell {
+  position: relative;
+  text-align: right; /* 매도 수량을 오른쪽 정렬 */
+}
+
+.order-quantity {
+  display: block;
+  position: relative; /* 숫자를 막대 바깥에 위치시킴 */
+  z-index: 2; /* 막대 위에 숫자가 오도록 z-index 설정 */
+  color: black; /* 숫자 색상 설정 */
+}
+.order-quantity-buy {
+  text-align: left; /* 매수 수량을 왼쪽 정렬 */
+}
+
+.bar {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.sell-bar {
+  background-color: #c4e7fd;
+  right: 0;
+}
+
+.buy-bar {
+  background-color: #ffd6dc;
+  left: 0;
+  text-align: left; /* 매수 수량을 왼쪽 정렬 */
+}
+
+.visible {
+  visibility: visible;
+}
