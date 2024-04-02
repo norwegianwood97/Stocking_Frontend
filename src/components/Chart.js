@@ -17,11 +17,13 @@ function Chart() {
     ws.onmessage = (event) => {
       // 새로운 데이터(랜덤 수)를 기존 시리즈 데이터에 추가
       setSeries((prevSeries) => {
-        const newData = parseInt(event.data);
+        const message = JSON.parse(event.data);
+        let { currentPrice } = message;
+        currentPrice = parseInt(currentPrice);
         const updatedSeries = [
           {
             ...prevSeries[0],
-            data: [...prevSeries[0].data, newData],
+            data: [...prevSeries[0].data, currentPrice],
           },
         ];
         return updatedSeries;
