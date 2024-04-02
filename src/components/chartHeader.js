@@ -4,10 +4,10 @@ import { Link, useParams } from 'react-router-dom';
 import './chartHeader.css';
 
 const ChartHeader = () => {
-  const COMPANY_IDS = ['company1', 'company2', 'company3'];
-  const { companyid } = useParams(); // URL에서 companyid 값을 가져옵니다.
+  const COMPANY_IDS = ['회사1', '회사2', '회사3'];
+  const { companyId } = useParams(); // URL에서 companyid 값을 가져옵니다.
 
-  const companyIndex = parseInt(companyid, 10) - 1;
+  const companyIndex = parseInt(companyId, 10) - 1;
   const companyName = COMPANY_IDS[companyIndex];
 
   return (
