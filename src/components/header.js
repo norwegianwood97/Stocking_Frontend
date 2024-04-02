@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '../api/axios.js';
-import './Header.css';
+import './header.css';
 import logoImage from '../assets/logo.png';
 import homeIcon from '../assets/home_icon.png';
 import userIcon from '../assets/user_icon2.png';
