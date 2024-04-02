@@ -96,7 +96,7 @@ const MyPage = () => {
   };
   const renderUserInfo = () => {
     return (
-      <div className="MyInfo">
+      <div className="MyInfo section">
         <h1>{isLoading ? <Skeleton width={200} /> : `${userInfo.nickname}님의 정보`}</h1>
         <p>자산: {isLoading ? <Skeleton /> : `${userInfo.currentMoney}원`}</p>
         <p>총 자산 가치: {isLoading ? <Skeleton /> : `${userInfo.totalAsset}원`}</p>
@@ -107,7 +107,7 @@ const MyPage = () => {
   };
   const renderRankingsTable = () => {
     return (
-      <div>
+      <div className="section-container section">
         <h1>대회 랭킹</h1>
         <table>
           <thead>
@@ -133,7 +133,7 @@ const MyPage = () => {
 
   const renderMmrRankingsTable = () => {
     return (
-      <div>
+      <div className="section-container section">
         <h1>MMR 랭킹</h1>
         <table>
           <thead>
@@ -162,7 +162,7 @@ const MyPage = () => {
   };
   const renderUserInfoUpdateForm = () => {
     return (
-      <form onSubmit={handleUserInfoUpdate} className="updateUserInfoForm">
+      <form onSubmit={handleUserInfoUpdate} className="updateUserInfoForm section-container section">
         <h1>회원정보 수정</h1>
         <div>
           <label>변경할 닉네임</label>

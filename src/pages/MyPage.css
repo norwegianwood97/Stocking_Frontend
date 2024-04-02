@@ -24,16 +24,16 @@
 .RankMMRModify {
   display: flex;
   flex-direction: row;
-  justify-content: space-around; /* 가운데 정렬을 위해 수정 */
+  justify-content: center; /* 가운데 정렬을 위해 수정 */
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 40px;
 }
 
 /* 테이블과 폼에 공통적으로 적용될 스타일 */
 .RankMMRModify table,
 .RankMMRModify form {
-  flex: 1 1 300px; /* 아이템이 차지할 수 있는 최소 크기를 300px로 설정 */
+  flex: 1 1 1; /* 아이템이 차지할 수 있는 최소 크기를 300px로 설정 */
   /* flex-grow, flex-shrink, flex-basis 값으로 구성되며, 여기서는 아이템이 늘어나거나 줄어들 수 있고, 기본 크기는 300px입니다. */
 }
 /* 회원정보 수정 폼 컨테이너 */
@@ -75,4 +75,23 @@
 
 .updateUserInfoForm button[type='submit']:hover {
   background-color: #0056b3;
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 세로축 기준 가운데 정렬 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.section-container h1 {
+  width: 100%; /* h1 태그가 컨테이너 너비 전체를 차지하도록 설정 */
+}
+
+.section {
+  background-color: white; /* 각 섹션의 배경색을 하얗게 설정 */
+  border-radius: 8px; /* 모서리를 둥글게 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 그림자 효과 추가 */
+  padding: 20px; /* 내부 여백 추가 */
+  margin-bottom: 20px; /* 아래쪽 마진 추가 */
 }
