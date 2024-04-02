@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import OrderPage from './pages/OrderPage';
 import ChartPage from './pages/chartPage';
+import MyPage from './pages/MyPage';
 import Header from './components/header';
 import SimpleHeader from './components/headerSimple';
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/order" element={<OrderPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/company/:companyId" element={<ChartPage />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </>
   );
