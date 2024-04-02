@@ -7,6 +7,11 @@ import './MyPage.css';
 
 const MyPage = () => {
   const [userInfo, setUserInfo] = useState({});
+  const [rankings, setRankings] = useState([]);
+  const [mmrRankings, setMmrRankings] = useState([]);
+  const [newNickname, setNewNickname] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+
   const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -29,8 +34,50 @@ const MyPage = () => {
         }
         setIsLoading(false); // 데이터 로딩 완료
       });
+    axios
+      .get('/api/rank')
+      .then((response) => {
+        setRankings(response.data); // 불러온 랭킹 데이터를 상태에 저장
+      })
+      .catch((error) => {
+        console.error('Error fetching rankings:', error);
+      });
+    axios
+      .get('/api/rank/mmr')
+      .then((response) => {
+        setMmrRankings(response.data); // 불러온 MMR 랭킹 데이터를 상태에 저장
+      })
+      .catch((error) => {
+        console.error('Error fetching MMR rankings:', error);
+      });
   }, []);
+  const handleUserInfoUpdate = (e) => {
+    e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
+    // 변경할 닉네임과 비밀번호를 조건부로 설정
+    const requestBody = {};
+    if (newNickname) requestBody.nickname = newNickname;
+    if (newPassword) requestBody.password = newPassword;
+
+    // 변경할 닉네임 또는 비밀번호가 있을 경우에만 요청을 보냄
+    if (Object.keys(requestBody).length > 0) {
+      axios
+        .put('/api/user', requestBody)
+        .then((response) => {
+          alert('회원 정보가 성공적으로 업데이트 되었습니다.');
+          // 여기서 추가적인 성공 처리를 할 수 있습니다. 예를 들면:
+          // - 사용자 정보를 다시 불러오기
+          // - 입력 필드 초기화
+          // - 사용자를 다른 페이지로 리다이렉션하기 등
+        })
+        .catch((error) => {
+          console.error('회원 정보 업데이트에 실패했습니다:', error);
+          // 에러 처리
+        });
+    } else {
+      alert('변경할 닉네임 또는 비밀번호를 입력해주세요.');
+    }
+  };
   const getTierClassName = (tier) => {
     switch (tier) {
       case 'bronze':
@@ -58,11 +105,79 @@ const MyPage = () => {
       </div>
     );
   };
-
+  const renderRankingsTable = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>이름</th>
+            <th>수익률</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rankings.map((ranking) => (
+            <tr key={ranking.ranking}>
+              <td>{ranking.ranking}</td>
+              <td>{ranking.nickname}</td>
+              <td>{ranking.earningRate.toFixed(2)}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+  const renderMmrRankingsTable = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>닉네임</th>
+            <th>MMR</th>
+            <th>티어</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mmrRankings.map((ranking) => (
+            <tr key={ranking.ranking}>
+              <td>{ranking.ranking}</td>
+              <td>{ranking.nickname}</td>
+              <td>{ranking.mmr}</td>
+              <td>
+                <span className={getTierClassName(ranking.tier)}>{ranking.tier}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+  const renderUserInfoUpdateForm = () => {
+    return (
+      <form onSubmit={handleUserInfoUpdate}>
+        <h1>회원정보 수정</h1>
+        <div>
+          <label>변경할 닉네임</label>
+          <input type="text" value={newNickname} onChange={(e) => setNewNickname(e.target.value)} />
+        </div>
+        <div>
+          <label>변경할 비밀번호</label>
+          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+        </div>
+        <button type="submit">변경하기</button>
+      </form>
+    );
+  };
   return (
     <div className="MainPage">
-      <div className="InfoStockCompany">
+      <div className="InfoContainer">
         <div className="Info">{renderUserInfo()}</div>
+      </div>
+      <div className="RankMMRModify">
+        {renderRankingsTable()}
+        {renderMmrRankingsTable()}
+        {renderUserInfoUpdateForm()}
       </div>
     </div>
   );
