@@ -95,3 +95,21 @@
   padding: 20px; /* 내부 여백 추가 */
   margin-bottom: 20px; /* 아래쪽 마진 추가 */
 }
+
+.rank-gold {
+  background-color: #fff4cc; /* 연금색 */
+}
+
+.rank-silver {
+  background-color: #e6e6e6; /* 연은색 */
+}
+
+.rank-bronze {
+  background-color: #f2e0d5; /* 연동색 */
+}
+
+.RankMMRModify table td,
+.RankMMRModify table th {
+  text-align: center;
+  vertical-align: middle;
+}

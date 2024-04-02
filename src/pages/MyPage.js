@@ -78,6 +78,19 @@ const MyPage = () => {
       alert('변경할 닉네임 또는 비밀번호를 입력해주세요.');
     }
   };
+  const getRankClassName = (rank) => {
+    switch (rank) {
+      case 1:
+        return 'rank-gold';
+      case 2:
+        return 'rank-silver';
+      case 3:
+        return 'rank-bronze';
+      default:
+        return '';
+    }
+  };
+
   const getTierClassName = (tier) => {
     switch (tier) {
       case 'bronze':
@@ -119,7 +132,7 @@ const MyPage = () => {
           </thead>
           <tbody>
             {rankings.map((ranking) => (
-              <tr key={ranking.ranking}>
+              <tr key={ranking.ranking} className={getRankClassName(ranking.ranking)}>
                 <td>{ranking.ranking}</td>
                 <td>{ranking.nickname}</td>
                 <td>{ranking.earningRate.toFixed(2)}%</td>
@@ -146,7 +159,7 @@ const MyPage = () => {
           </thead>
           <tbody>
             {mmrRankings.map((ranking) => (
-              <tr key={ranking.ranking}>
+              <tr key={ranking.ranking} className={getRankClassName(ranking.ranking)}>
                 <td>{ranking.ranking}</td>
                 <td>{ranking.nickname}</td>
                 <td>{ranking.mmr}</td>
