@@ -1,3 +1,28 @@
+/* 호가창 컨테이너 스타일 */
+.orderBook {
+  text-align: center; /* 모든 텍스트 중앙 정렬 */
+}
+
+/* 테이블 스타일 */
+table {
+  margin-left: auto; /* 왼쪽 마진을 자동으로 설정하여 오른쪽으로 밀어냄 */
+  margin-right: auto; /* 오른쪽 마진을 자동으로 설정하여 왼쪽으로 밀어냄 */
+  width: 80%; /* 테이블의 너비를 전체 너비의 80%로 설정 */
+  min-width: 500px;
+}
+table thead th {
+  background-color: black; /* 테이블 헤더 배경색을 파란색으로 설정 */
+  color: white; /* 헤더의 글자색을 흰색으로 설정 */
+}
+
+/* 로딩 인디케이터 스타일 */
+.loading-indicator {
+  margin: 20px 0; /* 위 아래 마진 설정으로 좀 더 여백을 줌 */
+}
+.price-cell {
+  text-align: center; /* 금액을 가운데 정렬 */
+}
+
 .order-cell {
   position: relative;
   text-align: right; /* 매도 수량을 오른쪽 정렬 */
