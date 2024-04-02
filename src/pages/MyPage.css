@@ -1,0 +1,38 @@
+.MyInfoContainer {
+  display: flex; /* Flexbox를 적용 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  flex-wrap: wrap; /* 내용이 넘치면 다음 줄로 */
+  gap: 20px; /* 아이템 사이 간격 */
+} /* 사용자 정보를 표시하는 컨테이너에 적용할 스타일 */
+
+.MyInfo {
+  min-width: 80%;
+  display: flex; /* Flexbox를 사용 */
+  flex-direction: row; /* 아이템들을 행 방향으로 배치 */
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-around; /* 아이템 사이에 공간을 균등하게 배분 */
+  flex-wrap: wrap; /* 내용이 넘치면 다음 줄로 넘김 */
+  gap: 10px; /* 아이템 사이의 간격 */
+}
+
+.MyInfo p,
+.MyInfo h1 {
+  margin: 0; /* 기본 마진 제거 */
+  padding: 0; /* 기본 패딩 제거 */
+}
+.RankMMRModify {
+  display: flex; /* Flexbox를 사용하여 아이템들을 가로로 나열 */
+  flex-direction: row; /* 가로 방향으로 아이템을 나열 */
+  justify-content: space-around; /* 아이템 사이에 공간을 균등하게 배분 */
+  align-items: flex-start; /* 아이템들을 시작점(위)에 맞춰 정렬 */
+  flex-wrap: wrap; /* 화면 크기에 따라 아이템을 다음 줄로 넘김 */
+  gap: 20px; /* 아이템 사이의 간격 */
+}
+
+/* 테이블과 폼에 공통적으로 적용될 스타일 */
+.RankMMRModify table,
+.RankMMRModify form {
+  flex: 1 1 300px; /* 아이템이 차지할 수 있는 최소 크기를 300px로 설정 */
+  /* flex-grow, flex-shrink, flex-basis 값으로 구성되며, 여기서는 아이템이 늘어나거나 줄어들 수 있고, 기본 크기는 300px입니다. */
+}

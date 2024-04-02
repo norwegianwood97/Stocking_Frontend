@@ -96,10 +96,10 @@ const MyPage = () => {
   };
   const renderUserInfo = () => {
     return (
-      <div className="Info">
+      <div className="MyInfo">
         <h1>{isLoading ? <Skeleton width={200} /> : `${userInfo.nickname}님의 정보`}</h1>
         <p>자산: {isLoading ? <Skeleton /> : `${userInfo.currentMoney}원`}</p>
-        <p>총액: {isLoading ? <Skeleton /> : `${userInfo.totalAsset}원`}</p>
+        <p>총 자산 가치: {isLoading ? <Skeleton /> : `${userInfo.totalAsset}원`}</p>
         <p>티어: {isLoading ? <Skeleton width={100} /> : <span className={getTierClassName(userInfo.tier)}>{userInfo.tier}</span>}</p>
         <p>총 수익률: {isLoading ? <Skeleton width={100} /> : `${(userInfo.initialSeed > 0 ? ((userInfo.totalAsset - userInfo.initialSeed) / userInfo.initialSeed) * 100 : 0).toFixed(2)}%`}</p>
       </div>
@@ -107,50 +107,57 @@ const MyPage = () => {
   };
   const renderRankingsTable = () => {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>순위</th>
-            <th>이름</th>
-            <th>수익률</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rankings.map((ranking) => (
-            <tr key={ranking.ranking}>
-              <td>{ranking.ranking}</td>
-              <td>{ranking.nickname}</td>
-              <td>{ranking.earningRate.toFixed(2)}%</td>
+      <div>
+        <h1>대회 랭킹</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>순위</th>
+              <th>이름</th>
+              <th>수익률</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rankings.map((ranking) => (
+              <tr key={ranking.ranking}>
+                <td>{ranking.ranking}</td>
+                <td>{ranking.nickname}</td>
+                <td>{ranking.earningRate.toFixed(2)}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   };
+
   const renderMmrRankingsTable = () => {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>순위</th>
-            <th>닉네임</th>
-            <th>MMR</th>
-            <th>티어</th>
-          </tr>
-        </thead>
-        <tbody>
-          {mmrRankings.map((ranking) => (
-            <tr key={ranking.ranking}>
-              <td>{ranking.ranking}</td>
-              <td>{ranking.nickname}</td>
-              <td>{ranking.mmr}</td>
-              <td>
-                <span className={getTierClassName(ranking.tier)}>{ranking.tier}</span>
-              </td>
+      <div>
+        <h1>MMR 랭킹</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>순위</th>
+              <th>닉네임</th>
+              <th>MMR</th>
+              <th>티어</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {mmrRankings.map((ranking) => (
+              <tr key={ranking.ranking}>
+                <td>{ranking.ranking}</td>
+                <td>{ranking.nickname}</td>
+                <td>{ranking.mmr}</td>
+                <td>
+                  <span className={getTierClassName(ranking.tier)}>{ranking.tier}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   };
   const renderUserInfoUpdateForm = () => {
@@ -170,10 +177,8 @@ const MyPage = () => {
     );
   };
   return (
-    <div className="MainPage">
-      <div className="InfoContainer">
-        <div className="Info">{renderUserInfo()}</div>
-      </div>
+    <div className="MyPage">
+      <div className="MyInfoContainer">{renderUserInfo()}</div>
       <div className="RankMMRModify">
         {renderRankingsTable()}
         {renderMmrRankingsTable()}
