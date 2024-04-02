@@ -1,0 +1,115 @@
+.MyInfoContainer {
+  display: flex; /* Flexbox를 적용 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  flex-wrap: wrap; /* 내용이 넘치면 다음 줄로 */
+  gap: 20px; /* 아이템 사이 간격 */
+} /* 사용자 정보를 표시하는 컨테이너에 적용할 스타일 */
+
+.MyInfo {
+  min-width: 80%;
+  display: flex; /* Flexbox를 사용 */
+  flex-direction: row; /* 아이템들을 행 방향으로 배치 */
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-around; /* 아이템 사이에 공간을 균등하게 배분 */
+  flex-wrap: wrap; /* 내용이 넘치면 다음 줄로 넘김 */
+  gap: 10px; /* 아이템 사이의 간격 */
+}
+
+.MyInfo p,
+.MyInfo h1 {
+  margin: 0; /* 기본 마진 제거 */
+  padding: 0; /* 기본 패딩 제거 */
+}
+.RankMMRModify {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* 가운데 정렬을 위해 수정 */
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* 테이블과 폼에 공통적으로 적용될 스타일 */
+.RankMMRModify table,
+.RankMMRModify form {
+  flex: 1 1 1; /* 아이템이 차지할 수 있는 최소 크기를 300px로 설정 */
+  /* flex-grow, flex-shrink, flex-basis 값으로 구성되며, 여기서는 아이템이 늘어나거나 줄어들 수 있고, 기본 크기는 300px입니다. */
+}
+/* 회원정보 수정 폼 컨테이너 */
+.updateUserInfoForm {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+/* 입력 필드 스타일 */
+.updateUserInfoForm input[type='text'],
+.updateUserInfoForm input[type='password'] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.updateUserInfoForm input[type='text']:focus,
+.updateUserInfoForm input[type='password']:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* 버튼 스타일 */
+.updateUserInfoForm button[type='submit'] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.updateUserInfoForm button[type='submit']:hover {
+  background-color: #0056b3;
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 세로축 기준 가운데 정렬 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.section-container h1 {
+  width: 100%; /* h1 태그가 컨테이너 너비 전체를 차지하도록 설정 */
+}
+
+.section {
+  background-color: white; /* 각 섹션의 배경색을 하얗게 설정 */
+  border-radius: 8px; /* 모서리를 둥글게 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 그림자 효과 추가 */
+  padding: 20px; /* 내부 여백 추가 */
+  margin-bottom: 20px; /* 아래쪽 마진 추가 */
+}
+
+.rank-gold {
+  background-color: #fff4cc; /* 연금색 */
+}
+
+.rank-silver {
+  background-color: #e6e6e6; /* 연은색 */
+}
+
+.rank-bronze {
+  background-color: #f2e0d5; /* 연동색 */
+}
+
+.RankMMRModify table td,
+.RankMMRModify table th {
+  text-align: center;
+  vertical-align: middle;
+}
