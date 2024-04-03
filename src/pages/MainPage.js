@@ -142,7 +142,7 @@ const MainPage = () => {
   return (
     <div className="MainPage">
       <div className="InfoStockCompany">
-        <div className="Info">{renderUserInfo()}</div>
+        {renderUserInfo()}
         <div className="Stock">
           <h1>보유 주식</h1>
           {renderStocksTable()}
