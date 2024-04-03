@@ -80,14 +80,14 @@ const MainPage = () => {
 
   const renderStocksTable = () => {
     return (
-      <table>
+      <table className="stocktable">
         <thead>
-          <tr>
-            <th className="company-name">회사명</th>
-            <th className="stock-quantity">주식 수</th>
-            <th className="current-price">현재가</th>
-            <th className="average-price">평단가</th>
-            <th className="profit-rate">수익률</th>
+          <tr className="stocktable-tr">
+            <th className="company-name-th">회사명</th>
+            <th className="stock-quantity-th">주식 수</th>
+            <th className="current-price-th">현재가</th>
+            <th className="average-price-th">평단가</th>
+            <th className="profit-rate-th">수익률</th>
           </tr>
         </thead>
         <tbody>
@@ -98,11 +98,11 @@ const MainPage = () => {
 
             return (
               <tr key={stock.stockId} onClick={() => goToCompanyPage(stock.companyId)} className={className}>
-                <td className="company-name">{stock.Company.name}</td>
-                <td className="stock-quantity">{stock.quantity}</td>
-                <td className="current-price-content">{stock.Company.currentPrice}원</td>
-                <td className="average-price-content">{stock.averagePrice.toFixed(2)}원</td>
-                <td className="profit-rate">{(((stock.Company.currentPrice - stock.averagePrice) / stock.averagePrice) * 100).toFixed(2)}%</td>
+                <td className="company-name-td">{stock.Company.name}</td>
+                <td className="stock-quantity-td">{stock.quantity}</td>
+                <td className="current-price-content-td">{stock.Company.currentPrice}원</td>
+                <td className="average-price-content-td">{stock.averagePrice.toFixed(2)}원</td>
+                <td className="profit-rate-td">{(((stock.Company.currentPrice - stock.averagePrice) / stock.averagePrice) * 100).toFixed(2)}%</td>
               </tr>
             );
           })}
@@ -113,12 +113,12 @@ const MainPage = () => {
 
   const renderCompaniesTable = () => {
     return (
-      <table>
+      <table className="companytable">
         <thead>
-          <tr>
-            <th className="company-name2">회사명</th>
-            <th className="current-price2">현재가</th>
-            <th className="fluctuation-rate2">등락률</th>
+          <tr className="companytable-tr">
+            <th className="company-name2-th">회사명</th>
+            <th className="current-price2-th">현재가</th>
+            <th className="fluctuation-rate2-th">등락률</th>
           </tr>
         </thead>
         <tbody>
@@ -128,9 +128,9 @@ const MainPage = () => {
 
             return (
               <tr key={company.companyId} onClick={() => goToCompanyPage(company.companyId)} className={className}>
-                <td className="company-name2">{company.name}</td>
-                <td className="current-price2-content">{company.currentPrice}원</td>
-                <td className="fluctuation-rate2-content">{company.fluctuationRate.toFixed(2)}%</td>
+                <td className="company-name2-td">{company.name}</td>
+                <td className="current-price2-content-td">{company.currentPrice}원</td>
+                <td className="fluctuation-rate2-content-td">{company.fluctuationRate.toFixed(2)}%</td>
               </tr>
             );
           })}
