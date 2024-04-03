@@ -31,7 +31,11 @@
   width: 100px; /* Adjust based on your logo size */
 }
 
-.modal {
+.header-modal {
+  display: flex;
+  flex-direction: column; /* 요소들을 세로로 쌓음 */
+  justify-content: center; /* 세로축(주축)에서 중앙 정렬 */
+  align-items: center; /* 가로축(교차 축)에서 중앙 정렬 */
   position: absolute;
   top: 50px; /* Adjust based on your header size */
   right: 10px;
@@ -40,7 +44,11 @@
   padding: 20px;
   z-index: 100;
   border-radius: 10px; /* 모서리를 둥글게 */
+  /* 모달의 높이와 너비를 지정해주면 세로 중앙 정렬이 더 잘 작동합니다. */
+  height: 200px; /* 예시 높이 */
+  width: 300px; /* 예시 너비 */
 }
+
 /* 헤더 내의 모든 이미지에 적용되는 스타일 */
 .header img {
   width: 80px; /* 너비 설정 */
