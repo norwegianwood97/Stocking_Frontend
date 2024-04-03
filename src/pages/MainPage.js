@@ -100,8 +100,8 @@ const MainPage = () => {
               <tr key={stock.stockId} onClick={() => goToCompanyPage(stock.companyId)} className={className}>
                 <td className="company-name-td">{stock.Company.name}</td>
                 <td className="stock-quantity-td">{stock.quantity}</td>
-                <td className="current-price-content-td">{stock.Company.currentPrice}원</td>
-                <td className="average-price-content-td">{stock.averagePrice.toFixed(2)}원</td>
+                <td className="current-price-td">{stock.Company.currentPrice}원</td>
+                <td className="average-price-td">{stock.averagePrice.toFixed(2)}원</td>
                 <td className="profit-rate-td">{(((stock.Company.currentPrice - stock.averagePrice) / stock.averagePrice) * 100).toFixed(2)}%</td>
               </tr>
             );
@@ -129,8 +129,8 @@ const MainPage = () => {
             return (
               <tr key={company.companyId} onClick={() => goToCompanyPage(company.companyId)} className={className}>
                 <td className="company-name2-td">{company.name}</td>
-                <td className="current-price2-content-td">{company.currentPrice}원</td>
-                <td className="fluctuation-rate2-content-td">{company.fluctuationRate.toFixed(2)}%</td>
+                <td className="current-price2-td">{company.currentPrice}원</td>
+                <td className="fluctuation-rate2-td">{company.fluctuationRate.toFixed(2)}%</td>
               </tr>
             );
           })}

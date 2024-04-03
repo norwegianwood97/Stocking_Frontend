@@ -127,45 +127,48 @@ tr:hover {
   background-color: lightgray;
 }
 
-.company-name {
+.company-name-th {
   text-align: center;
-  width: 15%; /* 예: 회사명 열의 너비를 테이블 전체 너비의 20%로 설정 */
+  width: 20%; /* 예: 회사명 열의 너비를 테이블 전체 너비의 20%로 설정 */
 }
 
-.current-price,
-.average-price {
+.current-price-th,
+.average-price-th {
   width: 25%; /* 예: 현재가와 평단가 열의 너비를 각각 25%로 설정 */
 }
-.stock-quantity {
+.stock-quantity-th {
   text-align: center;
 }
-.stock-quantity,
-.profit-rate {
+.stock-quantity-th,
+.profit-rate-th {
   width: 15%; /* 주식 수, 수익률, 등락률 열의 너비를 각각 15%로 설정 */
 }
 
-.company-name2 {
+.company-name2-th {
   /* 가운데 정렬 */
   text-align: center;
   width: 30%;
 }
-.current-price2 {
+.current-price2-th {
   width: 40%;
 }
-.fluctuation-rate2 {
+.fluctuation-rate2-th {
   width: 30%;
 }
-.current-price-content {
-  padding-right: 3%;
+.profit-rate-td {
+  padding-right: 2.5%;
 }
-.average-price-content {
-  padding-right: 3%;
+.current-price-td {
+  padding-right: 5%;
 }
-.current-price2-content {
-  padding-right: 9%;
+.average-price-td {
+  padding-right: 3.5%;
 }
-.fluctuation-rate2-content {
-  padding-right: 8%;
+.current-price2-td {
+  padding-right: 12%;
+}
+.fluctuation-rate2-td {
+  padding-right: 10%;
 }
 
 .tier-bronze {
@@ -189,5 +192,13 @@ tr:hover {
 }
 .Stock h1,
 .Company h1 {
+  text-align: center;
+}
+
+.company-name-td,
+.company-name2-td {
+  text-align: center;
+}
+.stock-quantity-td {
   text-align: center;
 }

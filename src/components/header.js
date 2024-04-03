@@ -10,7 +10,7 @@ const Header = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [nickname, setNickname] = useState('');
   const modalRef = useRef();
-  
+
   const navigate = useNavigate();
 
   // 모달 외부 클릭을 감지하는 함수
@@ -62,8 +62,9 @@ const Header = () => {
         </button>
       </div>
       {isModalOpen && (
-        <div className="modal" ref={modalRef}>
-          <h3>{nickname}님, 안녕하세요!</h3>
+        <div className="header-modal" ref={modalRef}>
+          <h3>{nickname}님</h3>
+          <h3>안녕하세요!</h3>
           <button onClick={goToMyPage} className="button-link my-info-button">
             내 정보
           </button>
