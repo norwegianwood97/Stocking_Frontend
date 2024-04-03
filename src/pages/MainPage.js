@@ -101,7 +101,7 @@ const MainPage = () => {
                 <td className="company-name">{stock.Company.name}</td>
                 <td className="stock-quantity">{stock.quantity}</td>
                 <td className="current-price-content">{stock.Company.currentPrice}원</td>
-                <td className="average-price-content">{stock.averagePrice}원</td>
+                <td className="average-price-content">{stock.averagePrice.toFixed(2)}원</td>
                 <td className="profit-rate">{(((stock.Company.currentPrice - stock.averagePrice) / stock.averagePrice) * 100).toFixed(2)}%</td>
               </tr>
             );
