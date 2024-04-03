@@ -79,17 +79,23 @@ const MyPage = () => {
     }
   };
   const getRankClassName = (rank) => {
+    let className = "table-row-height"; // 모든 행에 적용될 기본 높이 클래스
     switch (rank) {
       case 1:
-        return 'rank-gold';
+        className += " rank-gold";
+        break;
       case 2:
-        return 'rank-silver';
+        className += " rank-silver";
+        break;
       case 3:
-        return 'rank-bronze';
+        className += " rank-bronze";
+        break;
       default:
-        return '';
+        break;
     }
+    return className;
   };
+  
 
   const getTierClassName = (tier) => {
     switch (tier) {

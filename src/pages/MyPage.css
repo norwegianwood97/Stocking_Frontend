@@ -14,6 +14,7 @@
   justify-content: space-around; /* 아이템 사이에 공간을 균등하게 배분 */
   flex-wrap: wrap; /* 내용이 넘치면 다음 줄로 넘김 */
   gap: 10px; /* 아이템 사이의 간격 */
+  border: 1px solid #ccc; /* 테두리 추가 */
 }
 
 .MyInfo p,
@@ -43,7 +44,6 @@
   border-radius: 8px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
 }
 
 /* 입력 필드 스타일 */
@@ -78,6 +78,7 @@
 }
 
 .section-container {
+  border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
   align-items: center; /* 세로축 기준 가운데 정렬 */
@@ -112,4 +113,8 @@
 .RankMMRModify table th {
   text-align: center;
   vertical-align: middle;
+}
+.table-row-height {
+  height: 40.5px;
+  border: 1px solid #ccc;
 }

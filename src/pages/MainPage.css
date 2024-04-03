@@ -155,6 +155,9 @@ tr:hover {
 .fluctuation-rate2-th {
   width: 30%;
 }
+.profit-rate-td {
+  padding-right: 2.5%;
+}
 .current-price-td {
   padding-right: 5%;
 }
