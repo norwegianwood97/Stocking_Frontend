@@ -1,0 +1,443 @@
+.order-page {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* 페이지의 전체 높이를 사용합니다. */
+  }
+  
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    width: 50%; /* 왼쪽 컨텐츠 영역을 전체의 50%로 설정합니다. */
+  }
+    
+  .stock-list-container {
+    border-right: 1px solid #ddd;
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
+    overflow-x: hidden; /* This will hide the horizontal scrollbar */
+  }
+  
+  .sort-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  
+
+  .sort-button {
+    background-color: transparent; /* No background */
+    color: #333; /* Text color */
+    border: none; /* No border */
+    margin-right: 10px; /* Adjust this value to reduce the space between buttons */
+    padding: 0; /* No padding */
+    font-size: 1.2rem; /* Slightly larger font size for visibility */
+    font-weight: bold; /* Bold font weight to stand out */
+    cursor: pointer; /* Indicates it's clickable */
+    position: relative; /* For the positioning of the triangles */
+    text-decoration: none; /* No underline */
+  }
+  
+    .sort-button:hover, .sort-button:focus {
+        color: #333 !important; /* Using !important to override any other styles */
+        background-color: transparent !important; /* Keeping background transparent */
+    }
+  
+  
+  /* Triangles */
+  .sort-button::after {
+    content: '';
+    display: inline-block;
+    margin-left: 5px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+  }
+  
+  .sort-button.desc::after {
+    border-bottom: 5px solid #333; /* Black triangle at the bottom */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .sort-button.asc::after {
+    border-top: 5px solid #333; /* Black triangle at the top */
+    bottom: 50%;
+    transform: translateY(50%);
+  }
+  
+
+  .sort-button:last-child {
+    margin-right: 0; /* Ensure the last button doesn't have a margin on the right */
+  }
+  
+  .stock-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .stock-info {
+    flex-grow: 1;
+  }
+  
+  .stock-name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .stock-symbol {
+    font-size: 0.85rem;
+    color: #555;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .stock-list-container {
+    height: 500px; /* 예시 높이, 필요에 따라 조정하세요 */
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
+  }
+    
+  .stock-details {
+    background: #f7f7f7; /* Light grey background */
+    border-radius: 8px; /* Rounded corners for the card effect */
+    padding: 20px; /* Spacing inside the card */
+    margin-top: 20px; /* Space from the top element */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .no-selection {
+    padding: 10px;
+    color: #555;
+  }
+  
+  .stock-detail-name {
+    font-size: 1.5rem;
+    font-weight: 600; /* Medium bold */
+  }
+
+  .stock-detail-name2 {
+    font-size: 1.5rem;
+    font-weight: 600; /* Medium bold */
+  }
+
+  .stock-details-container {
+    height: 50vh; /* 세부 정보 박스의 높이를 화면의 50%로 설정합니다. */
+    overflow-y: auto; /* 내용이 넘치면 스크롤바가 생깁니다. */  
+    min-height: 150px;
+  }
+
+  .stock-details-container2 {
+    overflow-y: auto; /* 내용이 넘치면 스크롤바가 생깁니다. */
+    margin-top: 255px; /* 왼쪽 박스와 같은 높이에 오도록 상단 마진 조정 */
+    min-height: 450px;
+  }
+  
+  .stock-detail-symbol,
+    .stock-detail-price,
+    .stock-detail-date {
+    font-size: 1rem;
+    color: #555; /* Subtle text color */
+    margin: 10px 0; /* Space between details */
+    }
+
+    .stock-detail-symbol2,
+    .stock-detail-price2,
+    .stock-detail-date2 {
+    font-size: 1rem;
+    color: #555; /* Subtle text color */
+    margin: 10px 0; /* Space between details */
+    }
+
+
+    .stock-detail-symbol::before {
+        content: '🏷️'; /* Placeholder icon */
+        margin-right: 5px;
+      }
+    .stock-detail-symbol2::before {
+        content: '🏷️'; /* Placeholder icon */
+        margin-right: 5px;
+      }
+      
+      .stock-detail-price::before {
+        content: '💰';
+        margin-right: 5px;
+      }
+      .stock-detail-price2::before {
+        content: '💰';
+        margin-right: 5px;
+      }
+      
+      .stock-detail-date::before {
+        content: '📅';
+        margin-right: 5px;
+      }
+      .stock-detail-date2::before {
+        content: '📅';
+        margin-right: 5px;
+      }
+  
+      /* This will horizontally align the company name and transaction type */
+.stock-detail-header {
+    display: flex;
+    justify-content: space-between; /* Aligns children to the start and end of the container */
+    align-items: center; /* Centers children vertically */
+    padding-bottom: 10px; /* Add space below the header */
+  }
+  
+  .stock-detail-name {
+    font-size: 1.5rem;
+    font-weight: 600; /* Medium bold */
+    /* Keep the company name to the left */
+    flex: 1;
+  }
+  
+  .stock-transaction-type {
+    font-size: 1.5rem; /* Increase the font size */
+    font-weight: bold; /* Make it bold */
+    color: #007bff; /* Change color to make it stand out, pick any color you prefer */
+    /* Use padding/margin if needed, based on your design preference */
+    margin-left: 10px; /* Space from the company name */
+  }
+  
+  /* Rest of your CSS */
+  
+
+      .stock-transaction-type {
+        
+        font-size: 1.2rem; /* Larger font size */
+        font-weight: bold;
+        padding: 4px 8px; /* Padding makes it look like a tag or button */
+        background: #f2f2f2; /* Light background color */
+        border-radius: 4px; /* Rounded corners */
+        /* Add more styles if you want it to look like a tag or badge */
+      }
+
+
+  /* Additional styles for responsiveness and aesthetics */
+.stock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s;
+}
+
+.stock-item:hover {
+  background-color: #f9f9f9;
+}
+
+.stock-info {
+  flex-grow: 1;
+  display: flex;
+  align-items: baseline;
+}
+
+.stock-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.stock-symbol {
+  font-size: 1rem;
+  color: #666;
+  margin-right: 10px;
+}
+
+.stock-change {
+  font-size: 0.9rem;
+  color: #4CAF50; /* Green for positive, red for negative */
+}
+
+
+.no-selection {
+  padding: 20px;
+  text-align: center;
+  color: #555;
+  font-style: italic;
+}
+
+.no-selection:before {
+  content: 'ℹ️';
+  display: block;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  /* 스크롤바 전체와 트랙을 위한 스타일 */
+.scrollable-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .scrollable-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* 스크롤 핸들을 위한 스타일 */
+  .scrollable-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .scrollable-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .right-side-box {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+  
+  .right-side-box .sort-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  
+  .right-side-box .stock-list {
+    overflow-y: auto;
+    height: calc(100% - 60px); /* Adjusted for sort options height */
+    
+  }
+  
+  .right-side-box .stock-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+  }
+  
+  .right-side-box .stock-item:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .right-side-box .stock-info {
+    flex-grow: 1;
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .right-side-box .stock-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+  
+  .right-side-box .stock-symbol {
+    font-size: 1rem;
+    color: #666;
+    margin-right: 10px;
+  }
+  
+  .right-side-box .stock-change {
+    font-size: 0.9rem;
+    color: #4CAF50; /* Green for positive, red for negative */
+  }
+  
+  .right-side-box .no-selection {
+    padding: 20px;
+    text-align: center;
+    color: #555;
+    font-style: italic;
+  }
+  
+  .right-side-box .modal {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .right-side-box .stock-details {
+    background: #f7f7f7; /* Light grey background */
+    border-radius: 8px; /* Rounded corners for the card effect */
+    padding: 20px; /* Spacing inside the card */
+    margin-top: 20px; /* Space from the top element */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .right-side-box .stock-detail-symbol,
+  .right-side-box .stock-detail-price,
+  .right-side-box .stock-detail-date {
+    font-size: 1rem;
+    color: #555; /* Subtle text color */
+    margin: 10px 0; /* Space between details */
+  }
+
+  .right-side-box .stock-detail-symbol::before {
+    content: '🏷️'; /* Placeholder icon */
+    margin-right: 5px;
+  }
+  
+  .right-side-box .stock-detail-price::before {
+    content: '💰';
+    margin-right: 5px;
+  }
+  
+  .right-side-box .stock-detail-date::before {
+    content: '📅';
+    margin-right: 5px;
+  }
+  .separator {
+    margin: 20px 0; /* 가로 구분선의 위아래 여백 조절 */
+    border-top: 1px solid #ccc; /* 가로 구분선 스타일 및 색상 정의 */
+  }
+  .box-label,
+.box-label2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+  
