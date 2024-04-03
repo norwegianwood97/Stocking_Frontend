@@ -28,35 +28,35 @@ const OrderForm = () => {
   };
 
   return (
-    <div className="order-form-container">
-      <form onSubmit={handleSubmit} className="order-form">
-        <div className="form-section">
+    <div className="order-form-container" id="order-form-container">
+      <form onSubmit={handleSubmit} id="order-form">
+        <div className="form-sectionss">
           <div id="title">주문</div>
-          <button type="button" onClick={() => setType('buy')} disabled={type === 'buy'}>
+          <button type="button" className={`button_chart ${type === 'buy' ? 'active' : 'inactive'}`} onClick={() => setType('buy')}>
             매수
           </button>
-          <button type="button" onClick={() => setType('sell')} disabled={type === 'sell'}>
+          <button type="button" className={`button_chart ${type === 'sell' ? 'active' : 'inactive'}`} onClick={() => setType('sell')}>
             매도
           </button>
         </div>
-        <div className="form-section">
-          <button type="button" onClick={() => setPriceType('market')} disabled={priceType === 'market'}>
+        <div id="form-section">
+          <button type="button" className={`button_priceType ${priceType === 'market' ? 'active' : 'inactive'}`} onClick={() => setPriceType('market')} disabled={priceType === 'market'}>
             시장가
           </button>
-          <button type="button" onClick={() => setPriceType('limit')} disabled={priceType === 'limit'}>
+          <button type="button" className={`button_priceType ${priceType === 'limit' ? 'active' : 'inactive'}`} onClick={() => setPriceType('limit')} disabled={priceType === 'limit'}>
             지정가
           </button>
         </div>
         {priceType !== 'market' && (
-          <div className="form-section">
+          <div className="form-sectionss">
             <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="지정금액" />
           </div>
         )}
-        <div className="form-section">
+        <div className="form-sectionss">
           <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} placeholder="구매 주식수" />
         </div>
         <div className="form-section">
-          <button type="submit" className="submit-button">
+          <button type="submit" className="submit-buttossn">
             주문
           </button>
         </div>

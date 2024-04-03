@@ -1,5 +1,5 @@
 /* OrderForm.css */
-.order-form-container {
+#order-form-container {
   display: flex;
   justify-content: center; /* 컨테이너를 가로 방향으로 가운데 정렬 */
   align-items: center; /* 컨테이너를 세로 방향으로 가운데 정렬 */
@@ -9,7 +9,7 @@
   text-align: center;
   font-weight: bold;
 }
-.order-form {
+#order-form {
   width: 300px;
   height: 100%; /* 부모 요소인 .order-form-container의 높이에 맞게 설정 */
   display: flex;
@@ -21,7 +21,7 @@
   border-radius: 8px;
 }
 
-.form-section {
+#form-sectionss {
   margin-bottom: 50px;
   align-items: center; /* 수평 방향으로 가운데 정렬 */
 }
@@ -35,7 +35,7 @@ input[type='text'] {
   border-radius: 4px;
 }
 
-.submit-button {
+.submit-buttossn {
   width: 300px;
   padding: 10px;
   background-color: #007bff;
@@ -45,6 +45,26 @@ input[type='text'] {
   cursor: pointer;
 }
 
-.submit-button:hover {
-  background-color: #0056b3;
+.button_chart {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+}
+/* 지정가/시장가 버튼 스타일 */
+.button_priceType.active {
+  background-color: #007bff; /* 활성화 상태 색상 */
+  color: white;
+}
+
+.button_priceType.inactive {
+  background-color: #cccccc; /* 비활성화 상태 색상 */
+  color: #666666;
+}
+
+.button_priceType {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
 }
