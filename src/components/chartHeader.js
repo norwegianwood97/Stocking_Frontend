@@ -17,7 +17,7 @@ const ChartHeader = () => {
           <p>종목명: {companyName}</p>
         </div>
         <div className="Header-group_two">
-          <Link to="/orders" className="Header-link">
+          <Link to="/order" className="Header-link">
             내가 한 주문 확인
           </Link>
         </div>

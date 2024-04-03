@@ -52,7 +52,7 @@ function Chart() {
     series: [
       {
         type: 'candlestick',
-        name: '주식 가격',
+        name: `회사${companyId}`,
         data: [],
       },
     ],
