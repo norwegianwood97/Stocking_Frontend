@@ -36,11 +36,22 @@ const MainPage = () => {
     axios
       .get('/api/stock')
       .then((response) => {
-        setStocks(response.data); // 받아온 주식 정보로 상태 업데이트
+        // response.data가 객체이고 message 프로퍼티를 가지고 있는지 확인
+        if (typeof response.data === 'object' && !Array.isArray(response.data) && response.data.message) {
+          console.log('Message from server:', response.data.message);
+          return; // 추가 처리 없이 함수 종료
+        }
+        // response.data가 비어있는 배열인 경우도 처리
+        if (Array.isArray(response.data) && response.data.length === 0) {
+          return; // 빈 배열인 경우 추가 처리 없이 함수 종료
+        }
+        // 정상적인 경우, 주식 정보로 상태 업데이트
+        setStocks(response.data);
       })
       .catch((error) => {
         console.error('There was an error fetching the stock data:', error);
       });
+
     axios
       .get('/api/company')
       .then((response) => {
