@@ -22,17 +22,19 @@ const OrderForm = () => {
     event.preventDefault();
     try {
       console.log(type);
-      const orderResponse = await axios.post('/api/order', {
+      const response = await axios.post('/api/order', {
         companyId,
         type,
         price: priceType === 'limit' ? price : null,
         quantity,
       });
-      console.log(orderResponse.data);
+      alert(response.data.message);
+      console.log(response.data);
       // 주문 후 사용자 정보와 주식 정보를 갱신합니다.
       await fetchUserInfo();
       await fetchStocks();
     } catch (error) {
+      alert(error.response.data.message);
       console.error(error);
     }
   };
