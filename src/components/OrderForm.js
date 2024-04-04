@@ -20,9 +20,11 @@ const OrderForm = () => {
         price: priceType === 'limit' ? price : null,
         quantity,
       });
+      alert(response.data.message);
       console.log(response.data);
       // 주문 후 추가적인 작업 수행
     } catch (error) {
+      alert(error.response.data.message);
       console.error(error);
     }
   };
