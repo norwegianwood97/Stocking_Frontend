@@ -1,6 +1,11 @@
 .chart-and-order-container {
   display: flex;
-  justify-content: space-between;
-  max-width: 90%; /* 혹은 다른 수치 */
-  margin: 0 auto; /* 가운데 정렬을 위한 마진  */
+  justify-content: space-between; /* 요소들 사이에 간격을 최대로 줍니다. */
+  align-items: flex-start; /* 요소들을 컨테이너의 시작 부분에 정렬합니다. */
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.orderBook-container {
+  margin-right: 80px; /* OrderBook과 OrderForm 사이에 20px의 간격을 줍니다. */
 }

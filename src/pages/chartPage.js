@@ -11,8 +11,12 @@ function ChartPage() {
       <ChartHeader />
       <div className="chart-and-order-container">
         <Chart />
-        <OrderBook />
-        <OrderForm />
+        <div className="orderBook-container">
+          <OrderBook />
+        </div>
+        <div className="currentAsset-and-order">
+          <OrderForm />
+        </div>
       </div>
     </div>
   );

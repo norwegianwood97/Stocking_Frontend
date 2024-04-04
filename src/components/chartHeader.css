@@ -1,38 +1,57 @@
 .Header {
   background-color: #c9d4ff; /* 회색 배경 */
-  height: 40px;
-  padding-top: 20px;
+  padding: 20px 30px; /* 상하 패딩을 증가시켜서 header의 높이를 조정합니다 */
 }
+
 .Header-nav {
   display: flex;
   justify-content: space-between; /* 네비게이션 내의 요소들을 양 끝으로 분리 */
   align-items: center; /* 세로 중앙 정렬 */
-  padding: 0 30px; /* 양 끝에 패딩 추가 */
 }
 
 .Header-group_one,
 .Header-group_two {
   display: flex;
   align-items: center;
-  height: 10px;
 }
+
+
 .Header-group_one {
-  margin-bottom: 10px;
   margin-left: auto;
   font-weight: bold;
-  margin-right: 1000px;
+  margin-right: auto; /* 중앙에 위치하도록 auto로 설정 */
 }
 
-/* Header-link 클래스에 마진을 추가하여 링크 사이의 공간을 넓힘 */
+.Header-group_two {
+  /* 기존 스타일 유지 */
+  /* ... */
+  transition: background-color 0.2s; /* 배경색 변경에 애니메이션 효과를 줍니다. */
+}
+
+.Header-group_two:hover {
+  background-color: #000000; /* 호버 시 배경색을 어둡게 변경합니다. */
+}
+
+
+
 #checkOrder {
-  margin-right: 160px; /* 모든 링크의 오른쪽에 여백 추가 */
-  font-weight: bold;
-  height: 50px;
   text-decoration: none;
   color: black;
+  padding: 10px 20px; /* 적절한 패딩으로 버튼의 크기를 조정합니다 */
+  font-weight: bold;
+  background-color: #007bff; /* 밝은 파란색 배경 */
+  color: white; /* 글자 색을 흰색으로 */
+  border-radius: 5px; /* 모서리를 둥글게 */
+  border: none; /* 테두리를 제거 */
+  cursor: pointer; /* 마우스 오버 시 커서를 포인터로 */
+  transition: background-color 0.2s; /* 배경색 변경에 애니메이션 효과 */
+  display: inline-flex; /* flex 아이템들을 인라인으로 표시 */
+  justify-content: center; /* 내용을 가운데 정렬 */
+  align-items: center; /* 세로 방향으로 가운데 정렬 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  box-sizing: border-box; /* padding과 border가 width와 height에 포함되도록 설정 */
 }
 
-/* 마지막 링크의 경우 오른쪽 여백을 제거 */
-.Header-linkss:last-child {
-  margin-right: 0;
+.Header-linkss:hover {
+  background-color: #0056b3; /* 마우스 오버 시 배경색을 어둡게 변경 */
 }

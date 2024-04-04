@@ -26,11 +26,11 @@ const ChartHeader = () => {
     <header className="Header">
       <nav className="Header-nav">
         <div className="Header-group_one">
-          <p>{companyName}</p>
+          <h1>{companyName}</h1>
         </div>
         <div className="Header-group_two">
           <a href="/order" className="Header-linkss" id="checkOrder">
-            내가 한 주문 확인
+            주문 확인
           </a>
         </div>
       </nav>

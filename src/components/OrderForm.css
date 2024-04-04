@@ -1,9 +1,11 @@
 /* OrderForm.css */
 #order-form-container {
   display: flex;
-  justify-content: center; /* 컨테이너를 가로 방향으로 가운데 정렬 */
-  align-items: center; /* 컨테이너를 세로 방향으로 가운데 정렬 */
-  height: 100vh; /* 뷰포트 높이에 맞게 조정 */
+}
+#userCurrent {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 #title {
   text-align: center;
@@ -21,9 +23,13 @@
   border-radius: 8px;
 }
 
+
 #form-sectionss {
-  margin-bottom: 50px;
+ display: flex;
+  flex-direction: column;
   align-items: center; /* 수평 방향으로 가운데 정렬 */
+  justify-content: flex-start; /* 세로 방향으로 맨 위에서부터 시작하도록 변경 */
+  margin-bottom: 100px;
 }
 
 input[type='number'],
@@ -35,14 +41,21 @@ input[type='text'] {
   border-radius: 4px;
 }
 
+.form-section-order .button_chart {
+  width: 88px; /* 버튼의 너비를 150픽셀로 설정 */
+  /* 다른 스타일 속성들... */
+}
+
+
 .submit-buttossn {
-  width: 300px;
+  width: 200px;
   padding: 10px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .button_chart {
@@ -76,3 +89,21 @@ input[type='text'] {
   border: none;
   cursor: pointer;
 }
+
+
+
+.userInfo {
+  width: 100%; /* 또는 적절한 너비로 설정 */
+  max-width: 200px; /* 최대 너비를 설정하여 영역을 넘지 않도록 함 */
+  margin: auto; /* 가운데 정렬 */
+  border: 1px solid #ccc; /* 경계선을 표시하여 영역 확인 */
+  padding: 20px; /* 안쪽 여백 추가 */
+  box-sizing: border-box; /* padding을 포함한 너비가 width가 되도록 설정 */
+  margin-bottom: 20px;
+}
+
+.user-info-container {
+  margin-bottom: 20px;
+}
+
+
