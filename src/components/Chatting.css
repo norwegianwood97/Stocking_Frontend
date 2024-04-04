@@ -1,0 +1,98 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .message-list {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message-list li {
+    max-width: 60%;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    display: inline-block; /* 메시지를 인라인 블록으로 설정 */
+  }
+  
+  .my-message {
+    margin-left: auto;
+    background-color: #0084ff; /* 파란색 배경 */
+    color: white;
+    text-align: right;
+    width: auto; /* 메시지 내용에 맞게 너비 조절 */
+  }
+  
+  .other-message {
+    margin-right: auto;
+    background-color: #f1f0f0; /* 회색 배경 */
+    text-align: left;
+    width: auto; /* 메시지 내용에 맞게 너비 조절 */
+  }
+  
+  
+  .input-container {
+    display: flex;
+  }
+  
+  .input-container input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .input-container button {
+    white-space: nowrap;
+  }
+  .my-message-content, .other-message-content {
+    display: flex;
+    align-items: center; /* 메시지와 시간을 세로 중앙 정렬합니다 */
+  }
+  
+  .my-message .my-message-content {
+    justify-content: flex-start; /* 내 메시지의 경우 컨텐츠를 오른쪽으로 정렬합니다 */
+  }
+  
+  .other-message .other-message-content {
+    justify-content: flex-end; /* 상대방 메시지의 경우 컨텐츠를 왼쪽으로 정렬합니다 */
+  }
+  
+  .message-timestamp {
+    margin-left: 10px; /* 메시지와 시간 사이의 간격을 추가합니다 */
+    font-size: 0.75rem; /* 시간의 글꼴 크기를 줄입니다 */
+    color: #666; /* 시간의 글꼴 색상을 어둡게 설정합니다 */
+  }
+  
+  .my-message .message-timestamp {
+    margin-right: 10px;
+    margin-left: 0; /* 내 메시지의 경우 시간이 메시지의 왼쪽에 오도록 간격을 조정합니다 */
+  }
+  
+ .chat-container {
+  width: 100%; /* 전체 화면 너비를 사용 */
+  height: 20%; /* 화면 높이의 20%만큼만 사용 */
+  max-height: 300px; /* 채팅창의 최대 높이를 200px로 설정 */
+  position: fixed; /* 페이지 내에서 채팅창의 위치를 고정 */
+  bottom: 0; /* 하단에서 0px 떨어진 위치에 배치 */
+  left: 0; /* 왼쪽에서 0px 떨어진 위치에 배치 */
+  border-top: 1px solid #cccccc; /* 상단 테두리 설정 */
+  background-color: #f9f9f9; /* 배경색 설정 */
+  overflow: auto; /* 내용이 넘칠 경우 스크롤바 생성 */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 채팅창 상단에 그림자 효과 추가 */
+  z-index: 1000; /* 다른 요소들 위에 오도록 z-index 설정 */
+}
+
+.message-list {
+  height: calc(100% - 40px); /* 메시지 리스트의 높이를 채팅창 높이에서 입력 컨테이너 높이를 뺀 값으로 설정 */
+  overflow-y: auto; /* 세로 스크롤바 설정 */
+}
+
+.input-container {
+  position: absolute; /* 입력 영역을 채팅창 내에서 고정 위치에 배치 */
+  bottom: 0; /* 입력 영역을 채팅창 하단에 위치 */
+  width: 100%; /* 입력 영역의 너비를 채팅창 너비에 맞춤 */
+}

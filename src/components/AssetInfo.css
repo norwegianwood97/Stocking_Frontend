@@ -1,0 +1,19 @@
+
+.userInfo {
+    width: 100%; /* 또는 적절한 너비로 설정 */
+    max-width: 200px; /* 최대 너비를 설정하여 영역을 넘지 않도록 함 */
+    margin: auto; /* 가운데 정렬 */
+    border: 1px solid #ccc; /* 경계선을 표시하여 영역 확인 */
+    padding: 20px; /* 안쪽 여백 추가 */
+    box-sizing: border-box; /* padding을 포함한 너비가 width가 되도록 설정 */
+    margin-bottom: 20px;
+    margin-top:20px;
+    margin-right: 40px;
+  }
+  
+  .user-info-container {
+    margin-bottom: 20px;
+  }
+  
+  
+  

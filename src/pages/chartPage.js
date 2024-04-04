@@ -3,7 +3,9 @@ import ChartHeader from '../components/chartHeader';
 import Chart from '../components/Chart';
 import OrderBook from '../components/OrderBook';
 import OrderForm from '../components/OrderForm';
+import Chatting from '../components/Chatting.js';
 import './chartPage.css';
+import AssetInfo from '../components/AssetInfo.js';
 
 function ChartPage() {
   return (
@@ -14,9 +16,15 @@ function ChartPage() {
         <div className="orderBook-container">
           <OrderBook />
         </div>
-        <div className="currentAsset-and-order">
+        <div className="currentAsset">
+          <AssetInfo />
+        </div>
+        <div className="order">
           <OrderForm />
         </div>
+      </div>
+      <div>
+        <Chatting />
       </div>
     </div>
   );

@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../api/axios.js';
 import './OrderForm.css';
-//추가
-import Skeleton from 'react-loading-skeleton';
-import { useNavigate } from 'react-router-dom';
 
 const OrderForm = () => {
   const [type, setType] = useState('buy'); // 'buy' 또는 'sell'
@@ -150,12 +147,6 @@ const OrderForm = () => {
   return (
     <div className="order-form-container" id="order-form-container">
       <form onSubmit={handleSubmit} id="order-form">
-        <div id="userCurrent"> 현재 자산</div>
-        <div className="userInfo">
-          {renderUserInfo()}
-          <hr></hr>
-          {renderStocksTable()}
-        </div>
         <div id="title">주문</div>
         <div className="form-section-order">
           <button type="button" className={`button_chart ${type === 'buy' ? 'active' : 'inactive'}`} onClick={() => setType('buy')}>

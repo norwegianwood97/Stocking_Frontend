@@ -11,6 +11,7 @@ import MyPage from './pages/MyPage';
 import Header from './components/header';
 import ChatPage from './pages/Chat.js'
 import SimpleHeader from './components/headerSimple';
+import { ChatProvider } from './components/ChatContext';
 
 function AppWrapper() {
   return (
@@ -26,16 +27,18 @@ function App() {
 
   return (
     <>
-      {isAuthPage ? <SimpleHeader /> : <Header />}
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<MainPage />} />
-        <Route path="/chat" element={<ChatPage />} /> 
-        <Route path="/order" element={<OrderPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/company/:companyId" element={<ChartPage />} />
-        <Route path="/mypage" element={<MyPage />} />
-      </Routes>
+      <ChatProvider>
+        {isAuthPage ? <SimpleHeader /> : <Header />}
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/company/:companyId" element={<ChartPage />} />
+          <Route path="/mypage" element={<MyPage />} />
+        </Routes>
+      </ChatProvider>
     </>
   );
 }

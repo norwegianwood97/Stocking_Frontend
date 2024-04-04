@@ -3,6 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios.js';
+import Chatting from '../components/Chatting.js';
 import './MainPage.css';
 
 const MainPage = () => {
@@ -162,6 +163,9 @@ const MainPage = () => {
           <h1>종목 목록</h1>
           {renderCompaniesTable()}
         </div>
+      </div>
+      <div>
+        <Chatting />
       </div>
     </div>
   );
