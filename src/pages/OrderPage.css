@@ -1,443 +1,489 @@
+/* OrderPage.css */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f6;
+  margin: 0;
+  padding: 20px;
+}
+
 .order-page {
-    display: flex;
-    flex-direction: row;
-    height: 100vh; /* 페이지의 전체 높이를 사용합니다. */
-  }
-  
-  .main-content {
-    display: flex;
-    flex-direction: column;
-    width: 50%; /* 왼쪽 컨텐츠 영역을 전체의 50%로 설정합니다. */
-  }
-    
-  .stock-list-container {
-    border-right: 1px solid #ddd;
-    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
-    overflow-x: hidden; /* This will hide the horizontal scrollbar */
-  }
-  
-  .sort-options {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    align-items: center;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-  .sort-button {
-    background-color: transparent; /* No background */
-    color: #333; /* Text color */
-    border: none; /* No border */
-    margin-right: 10px; /* Adjust this value to reduce the space between buttons */
-    padding: 0; /* No padding */
-    font-size: 1.2rem; /* Slightly larger font size for visibility */
-    font-weight: bold; /* Bold font weight to stand out */
-    cursor: pointer; /* Indicates it's clickable */
-    position: relative; /* For the positioning of the triangles */
-    text-decoration: none; /* No underline */
-  }
-  
-    .sort-button:hover, .sort-button:focus {
-        color: #333 !important; /* Using !important to override any other styles */
-        background-color: transparent !important; /* Keeping background transparent */
-    }
-  
-  
-  /* Triangles */
-  .sort-button::after {
-    content: '';
-    display: inline-block;
-    margin-left: 5px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    position: absolute;
-  }
-  
-  .sort-button.desc::after {
-    border-bottom: 5px solid #333; /* Black triangle at the bottom */
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .sort-button.asc::after {
-    border-top: 5px solid #333; /* Black triangle at the top */
-    bottom: 50%;
-    transform: translateY(50%);
-  }
-  
+.main-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
 
-  .sort-button:last-child {
-    margin-right: 0; /* Ensure the last button doesn't have a margin on the right */
-  }
-  
-  .stock-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .stock-info {
-    flex-grow: 1;
-  }
-  
-  .stock-name {
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .stock-symbol {
-    font-size: 0.85rem;
-    color: #555;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    padding: 5px 15px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .stock-list-container {
-    height: 500px; /* 예시 높이, 필요에 따라 조정하세요 */
-    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
-  }
-    
-  .stock-details {
-    background: #f7f7f7; /* Light grey background */
-    border-radius: 8px; /* Rounded corners for the card effect */
-    padding: 20px; /* Spacing inside the card */
-    margin-top: 20px; /* Space from the top element */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  }
-  
-  .no-selection {
-    padding: 10px;
-    color: #555;
-  }
-  
-  .stock-detail-name {
-    font-size: 1.5rem;
-    font-weight: 600; /* Medium bold */
-  }
+form.mb-3 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .stock-detail-name2 {
-    font-size: 1.5rem;
-    font-weight: 600; /* Medium bold */
-  }
+/* Style for input fields */
+input.form-control {
+  padding: 10px 15px;
+  width: 400px !important; /* Set width to 100% of its parent container */
+  max-width: 500px;
+  border: 2px solid #d3d3d3; /* Solid border with a light grey color */
+  border-radius: 30px; /* Rounded corners for a modern look */
+  font-size: 16px;
+  line-height: 1.5;
+  color: #495057; /* Dark grey color for text */
+  background-color: #fff; /* White background */
+  background-clip: padding-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
-  .stock-details-container {
-    height: 50vh; /* 세부 정보 박스의 높이를 화면의 50%로 설정합니다. */
-    overflow-y: auto; /* 내용이 넘치면 스크롤바가 생깁니다. */  
-    min-height: 150px;
-  }
+  /* Adding some padding on the left for text */
+  padding-left: 25px;
+  box-shadow: none; /* Remove default box-shadow */
+}
 
-  .stock-details-container2 {
-    overflow-y: auto; /* 내용이 넘치면 스크롤바가 생깁니다. */
-    margin-top: 255px; /* 왼쪽 박스와 같은 높이에 오도록 상단 마진 조정 */
-    min-height: 450px;
-  }
-  
-  .stock-detail-symbol,
-    .stock-detail-price,
-    .stock-detail-date {
-    font-size: 1rem;
-    color: #555; /* Subtle text color */
-    margin: 10px 0; /* Space between details */
-    }
+/* Style for input field when it receives focus */
+input.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #5e72e4; /* Highlight with the theme color */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(94, 114, 228, 0.25); /* Soft glow effect */
+}
 
-    .stock-detail-symbol2,
-    .stock-detail-price2,
-    .stock-detail-date2 {
-    font-size: 1rem;
-    color: #555; /* Subtle text color */
-    margin: 10px 0; /* Space between details */
-    }
+/* Placeholder text style */
+input.form-control::placeholder {
+  color: #adb5bd; /* Light grey color for placeholder text */
+  opacity: 1; /* Firefox Fix */
+}
+
+/* Input with validation error */
+input.form-control.is-invalid {
+  border-color: #e3342f; /* Red color for error indication */
+}
+.btn-danger {
+  background-color: #e3342f !important; /* A strong red color */
+  border-color: #e3342f; /* Matching border color */
+  color: white; /* White text color */
+  padding: 8px 16px; /* Spacing inside the button */
+  border-radius: 20px; /* Rounded corners for a modern look */
+  cursor: pointer; /* Cursor indicates a clickable button */
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition for hover effects */
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.btn-danger:hover {
+  background-color: #c72d1a; /* Slightly darker red on hover for feedback */
+  box-shadow: 0 0 10px 0 rgba(227, 52, 47, 0.5); /* Slightly larger shadow on hover for a 'lifting' effect */
+}
+
+/* For disabled state */
+.btn-danger:disabled {
+  background-color: #e3342f;
+  border-color: #e3342f;
+  opacity: 0.65; /* Slightly transparent */
+  cursor: not-allowed; /* Indicates the button is not clickable */
+}
+
+/* Invalid feedback message */
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #e3342f;
+}
+
+input.form-control.is-invalid + .invalid-feedback {
+  display: block;
+}
 
 
-    .stock-detail-symbol::before {
-        content: '🏷️'; /* Placeholder icon */
-        margin-right: 5px;
-      }
-    .stock-detail-symbol2::before {
-        content: '🏷️'; /* Placeholder icon */
-        margin-right: 5px;
-      }
-      
-      .stock-detail-price::before {
-        content: '💰';
-        margin-right: 5px;
-      }
-      .stock-detail-price2::before {
-        content: '💰';
-        margin-right: 5px;
-      }
-      
-      .stock-detail-date::before {
-        content: '📅';
-        margin-right: 5px;
-      }
-      .stock-detail-date2::before {
-        content: '📅';
-        margin-right: 5px;
-      }
-  
-      /* This will horizontally align the company name and transaction type */
-.stock-detail-header {
-    display: flex;
-    justify-content: space-between; /* Aligns children to the start and end of the container */
-    align-items: center; /* Centers children vertically */
-    padding-bottom: 10px; /* Add space below the header */
-  }
-  
-  .stock-detail-name {
-    font-size: 1.5rem;
-    font-weight: 600; /* Medium bold */
-    /* Keep the company name to the left */
-    flex: 1;
-  }
-  
-  .stock-transaction-type {
-    font-size: 1.5rem; /* Increase the font size */
-    font-weight: bold; /* Make it bold */
-    color: #007bff; /* Change color to make it stand out, pick any color you prefer */
-    /* Use padding/margin if needed, based on your design preference */
-    margin-left: 10px; /* Space from the company name */
-  }
-  
-  /* Rest of your CSS */
-  
+button.btn {
+  background-color: #5e72e4; /* Soft purple for a modern look */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px; /* Rounded edges for a modern feel */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 16px;
+}
 
-      .stock-transaction-type {
-        
-        font-size: 1.2rem; /* Larger font size */
-        font-weight: bold;
-        padding: 4px 8px; /* Padding makes it look like a tag or button */
-        background: #f2f2f2; /* Light background color */
-        border-radius: 4px; /* Rounded corners */
-        /* Add more styles if you want it to look like a tag or badge */
-      }
+button.btn:hover {
+  background-color: #324cdd; /* Darken on hover */
+}
 
+.separator {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  height: 1px;
+  background: #e0e0e0;
+}
 
-  /* Additional styles for responsiveness and aesthetics */
+.stock-list-container {
+  overflow-y: auto;
+  max-height: 300px;
+}
+
 .stock-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 10px;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.3s;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .stock-item:hover {
-  background-color: #f9f9f9;
+  background-color: #f8f9fa; /* Highlight item on hover */
 }
 
 .stock-info {
-  flex-grow: 1;
-  display: flex;
-  align-items: baseline;
+  flex: 1; /* Allow the stock info to fill the space */
 }
 
-.stock-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-right: 15px;
+.stock-name,
+.stock-quantity,
+.stock-date,
+.stock-price {
+  font-size: 16px;
+  margin-bottom: 5px;
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
-.stock-symbol {
-  font-size: 1rem;
-  color: #666;
-  margin-right: 10px;
+.stock-details-container, .stock-details-container2 {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
-
-.stock-change {
-  font-size: 0.9rem;
-  color: #4CAF50; /* Green for positive, red for negative */
-}
-
 
 .no-selection {
-  padding: 20px;
   text-align: center;
-  color: #555;
-  font-style: italic;
-}
-
-.no-selection:before {
-  content: 'ℹ️';
-  display: block;
-  font-size: 3rem;
-  text-align: center;
-  margin-bottom: 20px;
-}
-.modal {
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  /* 스크롤바 전체와 트랙을 위한 스타일 */
-.scrollable-container::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .scrollable-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  
-  /* 스크롤 핸들을 위한 스타일 */
-  .scrollable-container::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-  }
-  
-  .scrollable-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-  
-  .right-side-box {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-  }
-  
-  .right-side-box .sort-options {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    align-items: center;
-  }
-  
-  .right-side-box .stock-list {
-    overflow-y: auto;
-    height: calc(100% - 60px); /* Adjusted for sort options height */
-    
-  }
-  
-  .right-side-box .stock-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 10px;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.3s;
-  }
-  
-  .right-side-box .stock-item:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .right-side-box .stock-info {
-    flex-grow: 1;
-    display: flex;
-    align-items: baseline;
-  }
-  
-  .right-side-box .stock-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-right: 15px;
-  }
-  
-  .right-side-box .stock-symbol {
-    font-size: 1rem;
-    color: #666;
-    margin-right: 10px;
-  }
-  
-  .right-side-box .stock-change {
-    font-size: 0.9rem;
-    color: #4CAF50; /* Green for positive, red for negative */
-  }
-  
-  .right-side-box .no-selection {
-    padding: 20px;
-    text-align: center;
-    color: #555;
-    font-style: italic;
-  }
-  
-  .right-side-box .modal {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .right-side-box .stock-details {
-    background: #f7f7f7; /* Light grey background */
-    border-radius: 8px; /* Rounded corners for the card effect */
-    padding: 20px; /* Spacing inside the card */
-    margin-top: 20px; /* Space from the top element */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  }
-  
-  .right-side-box .stock-detail-symbol,
-  .right-side-box .stock-detail-price,
-  .right-side-box .stock-detail-date {
-    font-size: 1rem;
-    color: #555; /* Subtle text color */
-    margin: 10px 0; /* Space between details */
-  }
-
-  .right-side-box .stock-detail-symbol::before {
-    content: '🏷️'; /* Placeholder icon */
-    margin-right: 5px;
-  }
-  
-  .right-side-box .stock-detail-price::before {
-    content: '💰';
-    margin-right: 5px;
-  }
-  
-  .right-side-box .stock-detail-date::before {
-    content: '📅';
-    margin-right: 5px;
-  }
-  .separator {
-    margin: 20px 0; /* 가로 구분선의 위아래 여백 조절 */
-    border-top: 1px solid #ccc; /* 가로 구분선 스타일 및 색상 정의 */
-  }
-  .box-label,
-.box-label2 {
+  color: #aaa;
   font-size: 18px;
-  font-weight: bold;
+}
+
+.stock-details {
+  font-size: 16px;
+}
+
+.stock-details div {
   margin-bottom: 10px;
 }
-  
+
+.edit-button {
+  background-color: #CCCCCC; /* Vibrant orange for edit buttons */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px; /* Consistent rounded edges */
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  font-size: 14px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+.edit-button:hover {
+  background-color: #ADD8E6; /* A warmer shade for hover state */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for a "lifted" effect */
+}
+
+/* If you're using SCSS, you can leverage variables and mixins for colors and transitions. */
+
+/* Consider adding a focus state for accessibility */
+.edit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(251, 99, 64, 0.5); /* Orange glow to indicate focus */
+}
+/* The modal wrapper should cover the entire screen */
+.modal-wrapper {
+  display: flex; /* Enables flex properties */
+  justify-content: center; /* Centers the modal horizontally */
+  align-items: center; /* Centers the modal vertically */
+  position: fixed; /* Fixed position */
+  top: 0; /* From the top edge */
+  left: 0; /* From the left edge */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1000; /* High z-index to be on top of other content */
+}
+/* Optional: Animates the modal appearance */
+.modal-wrapper .modal-content {
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 0.4s ease, transform 0.3s ease;
+}
+
+.modal-wrapper.show .modal-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+.modal-content {
+  z-index: 1001;
+
+  max-width: 500px; /* Adjust based on your preference */
+  margin: auto; /* Centers the modal */
+  background-color: #fff; /* Light background for the modal */
+  border-radius: 8px; /* Rounded corners for the modal */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow around the modal */
+  overflow: hidden; /* Ensures the content fits well within the rounded corners */
+}
+
+.modal-header {
+  padding: 16px 20px; /* Spacing inside the header */
+  background-color: #f2f2f2; /* Slightly different background for the header */
+  border-bottom: 1px solid #e5e5e5; /* Line separating header from the body */
+}
+
+.modal-title {
+  margin: 0; /* Removes default margins */
+  font-size: 1.25rem; /* Title size */
+  color: #333; /* Dark color for text for better readability */
+}
+
+.btn-close {
+  float: right; /* Positions the close button to the right */
+  border: none; /* Removes the border */
+  background: none; /* Transparent background */
+  cursor: pointer; /* Changes the cursor to indicate it's clickable */
+}
+
+.modal-body {
+  padding: 20px; /* Spacing inside the body */
+}
+
+.form-label {
+  display: block; /* Ensures the label takes its own line */
+  margin-bottom: .5rem; /* Spacing between label and input */
+  color: #666; /* Slightly lighter text for the label */
+}
+
+.form-control {
+  width: 100%; /* Ensures the input stretches to the full width of its container */
+  padding: 8px 12px; /* Padding inside the input */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners for the inputs */
+  box-sizing: border-box; /* Ensures padding doesn't affect the final size */
+}
+
+.modal-footer {
+  padding: 12px 20px; /* Spacing inside the footer */
+  background-color: #f2f2f2; /* Same as header for consistency */
+  border-top: 1px solid #e5e5e5; /* Line separating footer from the body */
+  text-align: right; /* Aligns buttons to the right */
+}
+
+.btn {
+  padding: 8px 15px; /* Button padding */
+  border: none; /* No border */
+  cursor: pointer; /* Indicates clickable */
+  border-radius: 4px; /* Rounded corners for buttons */
+  margin-left: 10px; /* Space between buttons */
+}
+
+.btn-secondary {
+  background-color: #6c757d; /* Grey color */
+  color: #fff; /* White text */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Slightly darker on hover */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Blue color */
+  color: #fff; /* White text */
+}
+
+.btn-primary:hover {
+  background-color: #0069d9; /* Slightly darker on hover */
+}
+
+
+.btn-close {
+  padding: 0.25rem 0.5rem;
+  color: inherit;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+/* Redesign sort buttons */
+/* Style for sort buttons */
+.sort-button {
+  background-color: #5e72e4; /* Consistent with the modern theme */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px; /* Rounded edges for a smooth, modern look */
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  font-size: 14px;
+  margin: 0 5px; /* Spacing between buttons */
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.sort-button:hover {
+  background-color: #324cdd; /* A darker shade for hover effect */
+  transform: translateY(-2px); /* Slight lift when hovered */
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.15); /* Increased shadow for lifted effect */
+}
+
+/* You can further differentiate the two buttons with different colors if needed */
+.sort-button.latest {
+  background-color: #1F2833; /* A fresh green for the latest */
+}
+
+.sort-button.oldest {
+  background-color: #808080; /* A warm red for the oldest */
+}
+
+.sort-button.latest:hover {
+  background-color: #808080; /* Darken green on hover */
+}
+
+.sort-button.oldest:hover {
+  background-color: #1F2833; /* Darken red on hover */
+}
+
+/* Special styles for active sort states */
+.sort-button.asc {
+  background-color: #11cdef; /* Light blue for ascending */
+}
+
+.sort-button.desc {
+  background-color: #f5365c; /* Soft pink for descending */
+}
+
+.box-label, .box-label2 {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+  .order-page {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .main-content {
+    flex: 1;
+  }
+
+  form.mb-3 {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .stock-list-container {
+    display: flex;
+  }
+
+  .stock-details-container, .stock-details-container2 {
+    margin-top: 20px;
+  }
+}
+/* Apply styles for all buttons to have a consistent modern and rounded look */
+button.btn, button.sort-button, .stock-item button {
+  background-color: #5e72e4; /* Soft purple for a modern look */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px; /* Rounded edges for a modern feel */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 14px;
+  margin-left: 4px; /* Add some space between buttons */
+}
+
+/* Adjust for the select button within a stock-item for better visual hierarchy */
+.stock-item button {
+  padding: 6px 12px;
+  font-size: 12px;
+  background-color: #2dce89; /* Soft green for select buttons */
+  border-radius: 15px;
+}
+
+button.btn:hover, button.sort-button:hover, .stock-item button:hover {
+  background-color: #324cdd; /* Darken on hover for main buttons */
+}
+
+/* Darken on hover for select buttons */
+.stock-item button:hover {
+  background-color: #24b76a; 
+}
+
+/* Additional Bootstrap classes can be applied directly in your JSX if needed, for example:
+<button className="btn btn-primary" onClick={() => handleSelectConcludedStock(stock)}>선택</button>
+*/
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar handle */
+  border-radius: 5px; /* Rounded corners of the handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+.delete-confirmation-modal {
+  position: fixed; /* 모달을 화면에 고정 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 내용물을 중앙에 정렬 */
+  z-index: 1050; /* 다른 요소 위에 표시 */
+}
+
+.modal-content {
+  width: 500px; /* 모달 창의 너비 */
+  background-color: #fff; /* 모달 창의 배경색 */
+  padding: 20px; /* 내용 주위에 약간의 공간 추가 */
+  border-radius: 5px; /* 모달 창의 모서리를 둥글게 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 모달 창에 그림자 추가 */
+}
+
+.modal-header,
+.modal-footer {
+  display: flex;
+  justify-content: space-between; /* 헤더와 푸터의 내용을 양 끝으로 정렬 */
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0; /* 기본 마진 제거 */
+}
+
+.modal-body {
+  margin-top: 20px; /* 본문과 헤더 사이의 공간 */
+  margin-bottom: 20px; /* 본문과 푸터 사이의 공간 */
+}
+
+.btn-close {
+  cursor: pointer; /* 마우스를 올렸을 때 커서 모양 변경 */
+  border: none; /* 버튼 테두리 제거 */
+  background: none; /* 버튼 배경색 제거 */
+}
+
