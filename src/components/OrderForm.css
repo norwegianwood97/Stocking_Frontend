@@ -61,7 +61,15 @@ input[type='text'] {
   background-color: #cccccc; /* 비활성화 상태 색상 */
   color: #666666;
 }
+.button_chart.active {
+  background-color: #007bff; /* 활성화 상태 색상 */
+  color: white;
+}
 
+.button_chart.inactive {
+  background-color: #cccccc; /* 비활성화 상태 색상 */
+  color: #666666;
+}
 .button_priceType {
   padding: 10px 20px;
   margin: 5px;
