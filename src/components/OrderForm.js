@@ -52,7 +52,13 @@ const OrderForm = () => {
   const fetchStocks = async () => {
     try {
       const response = await axios.get('/api/stock');
-      setStocks(response.data);
+      // response.data가 배열인지 확인하고, 배열이 아니면 빈 배열을 설정
+      if (Array.isArray(response.data)) {
+        setStocks(response.data);
+      } else {
+        console.error('Expected an array for stocks, but got:', response.data);
+        setStocks([]); // 배열이 아니라면 빈 배열로 초기화
+      }
     } catch (error) {
       console.error('There was an error fetching the stock data:', error);
     }
@@ -81,13 +87,22 @@ const OrderForm = () => {
     axios
       .get('/api/stock')
       .then((response) => {
-        setStocks(response.data); // 받아온 주식 정보로 상태 업데이트
-        setIsLoading(false); // 데이터 로딩 완료
+        // response.data가 객체이고 message 프로퍼티를 가지고 있는지 확인
+        if (typeof response.data === 'object' && !Array.isArray(response.data) && response.data.message) {
+          console.log('Message from server:', response.data.message);
+          return; // 추가 처리 없이 함수 종료
+        }
+        // response.data가 비어있는 배열인 경우도 처리
+        if (Array.isArray(response.data) && response.data.length === 0) {
+          return; // 빈 배열인 경우 추가 처리 없이 함수 종료
+        }
+        // 정상적인 경우, 주식 정보로 상태 업데이트
+        setStocks(response.data);
       })
       .catch((error) => {
         console.error('There was an error fetching the stock data:', error);
-        setIsLoading(false); // 데이터 로딩 실패 시에도 로딩 상태 해제
       });
+
     axios
       .get('/api/company')
       .then((response) => {
@@ -115,14 +130,15 @@ const OrderForm = () => {
   const renderStocksTable = () => {
     return (
       <div className="stock-info-container">
-        {stocks.map((stocks) => {
+        {stocks.map((stock) => {
           return (
-            <table className="stock-info-table" key={stocks.stockId}>
+            <table className="stock-info-table" key={stock.stockId}>
               <tbody>
-                <tr>회사명: {stocks.Company.name}</tr>
-                <tr>주식 수: {stocks.quantity}</tr>
-                <tr>현재가: {stocks.Company.currentPrice}원</tr>
-                <tr>평단가: {stocks.averagePrice.toFixed(0)}원</tr>
+                <tr>회사명: {stock.Company.name}</tr>
+                <tr>주식 수: {stock.quantity}</tr>
+                <tr>현재가: {stock.Company.currentPrice}원</tr>
+                <tr>평단가: {stock.averagePrice.toFixed(0)}원</tr>
+                <tr>&nbsp;</tr>
               </tbody>
             </table>
           );
@@ -137,6 +153,7 @@ const OrderForm = () => {
         <div id="userCurrent"> 현재 자산</div>
         <div className="userInfo">
           {renderUserInfo()}
+          <hr></hr>
           {renderStocksTable()}
         </div>
         <div id="title">주문</div>
