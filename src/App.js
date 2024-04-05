@@ -9,7 +9,7 @@ import OrderPage from './pages/OrderPage';
 import ChartPage from './pages/chartPage';
 import MyPage from './pages/MyPage';
 import Header from './components/header';
-import ChatPage from './pages/Chat.js'
+import ChatPage from './components/Chatting.js';
 import SimpleHeader from './components/headerSimple';
 import { ChatProvider } from './components/ChatContext';
 
