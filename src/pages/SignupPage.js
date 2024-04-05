@@ -12,6 +12,7 @@ function SignupPage() {
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [isPasswordMatch, setIsPasswordMatch] = useState(false); // 새로운 상태 추가
+  const [isEmailAvailable, setIsEmailAvailable] = useState(false); // 새로운 상태 추가
   const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 가져옴
 
   const validateEmail = () => {
@@ -49,14 +50,23 @@ function SignupPage() {
       setIsPasswordMatch(false); // 기본 상태는 false로 설정
     }
   };
-  useEffect(() => {
-    validateConfirmPassword();
-  }, [confirmPassword, password]);
+
+  const checkEmailAvailability = async () => {
+    try {
+      const response = await axiosInstance.post('http://localhost:3000/api/idcheck', { email });
+      if (response.status === 200) {
+        setIsEmailAvailable(true);
+        alert('사용 가능한 이메일입니다.');
+      }
+    } catch (error) {
+      setIsEmailAvailable(false);
+      alert('동일한 이메일이 이미 존재합니다.');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!emailError && !passwordError && !confirmPasswordError) {
     try {
       const response = await axiosInstance.post('http://localhost:3000/api/sign-up', { nickname, email, password });
       if (response.status === 200) {
@@ -68,7 +78,6 @@ function SignupPage() {
       alert(error.response.data.error.message);
       // 에러 처리
     }
-    //   }
   };
 
   return (
@@ -78,7 +87,12 @@ function SignupPage() {
         <p className="signup-subtitle">OO사이트에서 새로운 계정을 만드세요!</p>
         <form className="signup-form" onSubmit={handleSubmit}>
           <input placeholder="이름" value={nickname} onChange={(e) => setNickname(e.target.value)} />
-          <input type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={validateEmail} />
+          <div className="email-input-container">
+  <input type="email" className="email-input" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={validateEmail} />
+  <button type="button" className="inline-check-email-button" onClick={checkEmailAvailability}>
+    중복 확인
+  </button>
+</div>
           {emailError && (
             <p className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
               {emailError}
@@ -92,7 +106,8 @@ function SignupPage() {
           )}
           <input type="password" placeholder="비밀번호 확인" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} onBlur={validateConfirmPassword} />
           {confirmPasswordError && <p className={`error-message ${isPasswordMatch ? 'success-message' : ''}`}>{confirmPasswordError}</p>}
-          <button type="submit" className="submit-button">
+
+          <button type="submit" className="submit-button" disabled={!isEmailAvailable || !isPasswordMatch}>
             회원가입
           </button>
         </form>
