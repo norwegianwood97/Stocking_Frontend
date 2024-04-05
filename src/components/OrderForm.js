@@ -108,7 +108,7 @@ const OrderForm = () => {
       .catch((error) => {
         console.error('There was an error fetching the company data:', error);
       });
-  }, []); // 빈 배열을 넘겨주어 컴포넌트 마운트 시에만 요청을 보냅니다.
+  }, []); // 빈 배열을 넘겨주어 컴포넌트 마운트 시에만 요청을 보냅니다..
 
   const renderUserInfo = () => {
     return (
@@ -146,6 +146,12 @@ const OrderForm = () => {
 
   return (
     <div className="order-form-container" id="order-form-container">
+      <div className="userInfo">
+        현재 자산
+        {renderUserInfo()}
+        <hr></hr>
+        {renderStocksTable()}
+      </div>
       <form onSubmit={handleSubmit} id="order-form">
         <div id="title">주문</div>
         <div className="form-section-order">
@@ -174,7 +180,7 @@ const OrderForm = () => {
         </div>
         <div className="form-section">
           <button type="submit" className="submit-buttossn">
-            주문
+            주문 입력
           </button>
         </div>
       </form>
