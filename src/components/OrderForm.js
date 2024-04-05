@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from '../api/axios.js';
 import './OrderForm.css';
 
-const OrderForm = ({ onOrderSubmitted }) => {
+const OrderForm = () => {
   const [type, setType] = useState('buy'); // 'buy' 또는 'sell'
   const [priceType, setPriceType] = useState('market'); // 'market', 'limit', 'reservation'
   const [price, setPrice] = useState(''); // 지정가격
@@ -25,9 +25,6 @@ const OrderForm = ({ onOrderSubmitted }) => {
         price: priceType === 'limit' ? price : null,
         quantity,
       });
-      if (onOrderSubmitted) {
-        onOrderSubmitted();
-      }
       alert(response.data.message);
       console.log(response.data);
       // 주문 후 사용자 정보와 주식 정보를 갱신합니다.
@@ -149,6 +146,12 @@ const OrderForm = ({ onOrderSubmitted }) => {
 
   return (
     <div className="order-form-container" id="order-form-container">
+      <div className="userInfo">
+        현재 자산
+        {renderUserInfo()}
+        <hr></hr>
+        {renderStocksTable()}
+      </div>
       <form onSubmit={handleSubmit} id="order-form">
         <div id="title">주문</div>
         <div className="form-section-order">
@@ -177,7 +180,7 @@ const OrderForm = ({ onOrderSubmitted }) => {
         </div>
         <div className="form-section">
           <button type="submit" className="submit-buttossn">
-            주문
+            주문 입력
           </button>
         </div>
       </form>

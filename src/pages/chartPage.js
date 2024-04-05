@@ -36,9 +36,6 @@ function ChartPage() {
         <div className="orderBook-container">
           <OrderBook />
         </div>
-        <div className="currentAsset">
-          <AssetInfo />
-        </div>
         <div className="order">
           <OrderForm />
         </div>
