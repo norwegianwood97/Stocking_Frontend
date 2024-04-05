@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from '../api/axios.js';
 import './OrderForm.css';
 
-const OrderForm = () => {
+const OrderForm = ({ onOrderSubmitted }) => {
   const [type, setType] = useState('buy'); // 'buy' 또는 'sell'
   const [priceType, setPriceType] = useState('market'); // 'market', 'limit', 'reservation'
   const [price, setPrice] = useState(''); // 지정가격
@@ -25,6 +25,9 @@ const OrderForm = () => {
         price: priceType === 'limit' ? price : null,
         quantity,
       });
+      if (onOrderSubmitted) {
+        onOrderSubmitted();
+      }
       alert(response.data.message);
       console.log(response.data);
       // 주문 후 사용자 정보와 주식 정보를 갱신합니다.
