@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosInstance from '../api/axios.js';
 import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
@@ -49,23 +49,26 @@ function SignupPage() {
       setIsPasswordMatch(false); // 기본 상태는 false로 설정
     }
   };
+  useEffect(() => {
+    validateConfirmPassword();
+  }, [confirmPassword, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   // if (!emailError && !passwordError && !confirmPasswordError) {
-      try {
-        const response = await axiosInstance.post('http://localhost:3000/api/sign-up', { nickname, email, password });
-        if (response.status === 200) {
-          // 회원가입 성공 시 리다이렉트
-          alert(response.data.message);
-          navigate('/login');
-        }
-      } catch (error) {
-        alert(error.response.data.error.message);
-        // 에러 처리
+    // if (!emailError && !passwordError && !confirmPasswordError) {
+    try {
+      const response = await axiosInstance.post('http://localhost:3000/api/sign-up', { nickname, email, password });
+      if (response.status === 200) {
+        // 회원가입 성공 시 리다이렉트
+        alert(response.data.message);
+        navigate('/login');
       }
-//   }
+    } catch (error) {
+      alert(error.response.data.error.message);
+      // 에러 처리
+    }
+    //   }
   };
 
   return (
@@ -74,7 +77,7 @@ function SignupPage() {
         <h2 className="signup-title">회원가입</h2>
         <p className="signup-subtitle">OO사이트에서 새로운 계정을 만드세요!</p>
         <form className="signup-form" onSubmit={handleSubmit}>
-          <input type="text" placeholder="이름" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+          <input placeholder="이름" value={nickname} onChange={(e) => setNickname(e.target.value)} />
           <input type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={validateEmail} />
           {emailError && (
             <p className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
