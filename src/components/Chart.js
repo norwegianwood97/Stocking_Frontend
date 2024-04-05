@@ -7,8 +7,6 @@ function Chart() {
   const { companyId } = useParams();
   const echartRef = useRef(null);
   const [companyName, setCompanyName] = useState('');
-  let highPrice = null;
-  let lowPrice = null;
 
   // Fetch the company name
   useEffect(() => {
@@ -25,7 +23,7 @@ function Chart() {
 
   // WebSocket connection for real-time data
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:8080?companyId=${companyId}`);
+    const ws = new WebSocket(`ws://localhost:3000/ws/chartData/${companyId}`);
 
     ws.onmessage = (event) => {
       const { currentPrice, initialPrice, highPrice, lowPrice } = JSON.parse(event.data);
