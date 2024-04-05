@@ -34,7 +34,7 @@ function OrderPage() {
     // 검색어가 비어 있을 때에만 모든 주식 목록을 불러옴
     if (!searchTerm) {
       axios
-        .get('http://localhost:3000/api/order')
+        .get('/api/order')
         .then((response) => response.data)
         .then((data) => {
           setStocks(
@@ -56,7 +56,7 @@ function OrderPage() {
   useEffect(() => {
     if (!searchTerm2) {
       axios
-        .get('http://localhost:3000/api/concluded')
+        .get('/api/concluded')
         .then((response) => response.data)
         .then((data) => {
           setStocks2(
@@ -78,7 +78,7 @@ function OrderPage() {
   useEffect(() => {
     const fetchStocks = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/order?type=${selectedType}&order=${sortOrder}`);
+        const response = await axios.get(`/api/order?type=${selectedType}&order=${sortOrder}`);
         // 응답 데이터를 상태에 저장
         setStocks(
           response.data.map((order) => ({
@@ -102,7 +102,7 @@ function OrderPage() {
   useEffect(() => {
     const fetchConcludedStocks = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/concluded?type=${selectedType2}&order=${sortOrder2}`);
+        const response = await axios.get(`/api/concluded?type=${selectedType2}&order=${sortOrder2}`);
         // 응답 데이터를 상태에 저장
         setStocks2(
           response.data.map((order) => ({
@@ -155,7 +155,7 @@ function OrderPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.get(`http://localhost:3000/api/order/?name=${searchTerm}`);
+      const response = await axios.get(`/api/order/?name=${searchTerm}`);
       const data = response.data;
       console.log(data); // 응답 데이터 로깅으로 구조 확인
       const formattedData = data.map((order) => ({
@@ -175,7 +175,7 @@ function OrderPage() {
   const handleSubmit2 = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.get(`http://localhost:3000/api/concluded/?name=${searchTerm2}`);
+      const response = await axios.get(`/api/concluded/?name=${searchTerm2}`);
       const data = response.data;
       const formattedData = data.map((order) => ({
         name: order.Company ? order.Company.name : '회사 정보 없음', // 여기에서 Company 객체의 존재 여부를 확인합니다.
@@ -218,7 +218,7 @@ function OrderPage() {
   const handleEditSubmit = async (event) => {
     event.preventDefault();
     // 수정할 주문의 ID를 URL에 포함
-    const url = `http://localhost:3000/api/order?orderId=${editingStock.orderId}`;
+    const url = `/api/order?orderId=${editingStock.orderId}`;
     // 수정할 데이터 구성
     const updatedOrder = {
       price: editingStock.price,    // 사용자가 입력한 새로운 가격
@@ -259,7 +259,7 @@ function OrderPage() {
     }
 
     axios
-      .delete(`http://localhost:3000/api/order?orderId=${deleteOrderId}`)
+      .delete(`/api/order?orderId=${deleteOrderId}`)
       .then((response) => {
         console.log('Order successfully deleted:', response);
         setShowDeleteModal(false); // 삭제 성공 후 모달 창 숨기기
