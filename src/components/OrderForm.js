@@ -108,7 +108,7 @@ const OrderForm = () => {
       .catch((error) => {
         console.error('There was an error fetching the company data:', error);
       });
-  }, []); // 빈 배열을 넘겨주어 컴포넌트 마운트 시에만 요청을 보냅니다.
+  }, []); // 빈 배열을 넘겨주어 컴포넌트 마운트 시에만 요청을 보냅니다..
 
   const renderUserInfo = () => {
     return (
