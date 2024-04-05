@@ -69,8 +69,8 @@ const MessageList = ({ messages }) => {
     <ul className="message-list">
       {messages.map((message, index) => (
         <li key={index} className={message.isMine ? 'my-message' : 'other-message'}>
-          {(!message.isMine ? `${message.nickname}: ` : '') + message.text}
-          <span className="message-timestamp">{message.timestamp}</span> {/* 메시지 시간 표시 */}
+          {(!message.isMine ? `${message.nickname || '서버 메세지'}: ` : '') + message.text}
+          <span className="message-timestamp">{message.timestamp}</span>
         </li>
       ))}
       <div ref={endOfMessagesRef} />
