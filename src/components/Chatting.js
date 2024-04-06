@@ -8,7 +8,7 @@ const Chat = () => {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket(`wss://api.stockingchallenge/ws/chatting`);
+    ws.current = new WebSocket(`wss://api.stockingchallenge:3000/ws/chatting`);
 
     ws.current.onopen = () => console.log('Connected to the WS server');
     ws.current.onclose = () => console.log('Disconnected from the WS server');
