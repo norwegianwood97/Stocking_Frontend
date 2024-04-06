@@ -26,40 +26,47 @@ function Chart() {
     const ws = new WebSocket(`ws://localhost:3000/ws/chartData/${companyId}`);
 
     ws.onmessage = (event) => {
-      const { currentPrice, initialPrice, highPrice, lowPrice } = JSON.parse(event.data);
-      const currentTime = new Date().getTime();
-      const newData = [currentTime, initialPrice, highPrice, lowPrice, currentPrice];
+      const { currentPrice } = JSON.parse(event.data); // 현재 가격만 추출
+      const currentTime = new Date().getTime(); // 현재 시간
+      const newData = [currentTime, currentPrice]; // 데이터 배열은 시간과 현재 가격만 포함
+
       if (echartRef.current) {
         const echartInstance = echartRef.current.getEchartsInstance();
         const option = echartInstance.getOption();
+
+        // 데이터 배열에 새로운 데이터 추가
         option.series[0].data.push(newData);
-        // 10초 이상된 데이터를 필터링합니다.
-        const tenSecondsAgo = currentTime - 8000; // 현재시간에서 10초를 빼서 계산합니다.
+
+        // 10초 이상 된 데이터를 필터링합니다.
+        // 주의: 여기서 8000ms (8초)가 아닌 10000ms (10초)를 사용해야 정확합니다.
+        const tenSecondsAgo = currentTime - 8000; // 현재 시간에서 10초를 빼서 계산
         option.series[0].data = option.series[0].data.filter((data) => data[0] > tenSecondsAgo);
 
         // 옵션을 업데이트합니다.
         echartInstance.setOption(option, false);
       }
     };
-
     return () => ws.close();
   }, [companyId]);
 
   // Initial chart options
   const initialOption = {
     title: {
-      // Dynamically set the title
+      // 차트의 제목을 동적으로 설정할 수 있습니다.
+      // 예: text: '실시간 가격 추적'
     },
     tooltip: {
       trigger: 'axis',
       axisPointer: { type: 'cross' },
       formatter: null, // 기본 포맷을 사용하도록 설정
     },
-
     grid: {
       containLabel: true, // 라벨이 차트 영역 내에 있도록 합니다.
     },
-    xAxis: { type: 'time' },
+    xAxis: {
+      type: 'time',
+      // x축의 추가 설정이 필요할 경우 여기에 추가
+    },
     yAxis: {
       type: 'value',
       axisLabel: {
@@ -67,10 +74,28 @@ function Chart() {
         inside: false, // 라벨을 차트 영역 바깥에 놓습니다.
         formatter: '{value}', // y축 라벨의 표시 방식을 변경하고 싶으면 수정합니다.
       },
+      // y축의 추가 설정이 필요할 경우 여기에 추가
     },
-    series: [{ type: 'candlestick', name: companyName, data: [] }],
-    dataZoom: [{ type: 'inside', start: 0, end: 100, xAxisIndex: [0] }],
+    series: [
+      {
+        type: 'line', // 'candlestick' 대신 'line' 유형을 사용
+        name: 'Current Price', // 이 부분은 필요에 따라 `companyName`으로 대체하거나 수정할 수 있습니다.
+        data: [], // 데이터는 실시간으로 업데이트될 예정
+        smooth: true, // 라인 그래프를 부드럽게 표시
+        // 선의 색상, 두께 등 라인 그래프의 스타일을 여기에 설정할 수 있습니다.
+      },
+    ],
+    dataZoom: [
+      {
+        type: 'inside',
+        start: 0,
+        end: 100,
+        xAxisIndex: [0],
+      },
+    ],
+    // 기타 차트 설정이 필요할 경우 여기에 추가
   };
+
   return (
     <div style={{ width: '100%', maxWidth: '2000px', height: '1000px', marginLeft: '-100px' }} id="charts">
       <ReactEcharts ref={echartRef} option={initialOption} />
