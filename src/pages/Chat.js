@@ -7,7 +7,7 @@ const Chat = () => {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket('ws://localhost:3000/ws/chatting');
+    ws.current = new WebSocket(`wss://${process.env.REACT_APP_API_URL}/ws/chatting`);
 
     ws.current.onopen = () => console.log('Connected to the WS server');
     ws.current.onclose = () => console.log('Disconnected from the WS server');

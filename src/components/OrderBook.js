@@ -10,7 +10,7 @@ function OrderBook() {
 
   useEffect(() => {
     setIsLoading(true); // 데이터 요청 시작
-    const ws = new WebSocket(`ws://localhost:3000/ws/orderData/${companyId}`);
+    const ws = new WebSocket(`wss://${process.env.REACT_APP_API_URL}/ws/orderData/${companyId}`);
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);

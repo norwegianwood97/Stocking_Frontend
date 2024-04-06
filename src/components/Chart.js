@@ -23,7 +23,7 @@ function Chart() {
 
   // WebSocket connection for real-time data
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:3000/ws/chartData/${companyId}`);
+    const ws = new WebSocket(`wss://${process.env.REACT_APP_API_URL}/ws/chartData/${companyId}`);
 
     ws.onmessage = (event) => {
       const { currentPrice, initialPrice, highPrice, lowPrice } = JSON.parse(event.data);
