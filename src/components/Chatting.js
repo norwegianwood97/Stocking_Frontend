@@ -9,7 +9,7 @@ const Chat = () => {
 
   useEffect(() => {
     // WebSocket 연결
-    ws.current = new WebSocket(`wss://api.stockingchallenge.site/ws/chartData/${companyId}`);
+    ws.current = new WebSocket(`wss://api.stockingchallenge.site/ws/chatting`);
 
     ws.current.onopen = () => console.log('Connected to the WS server');
     ws.current.onclose = () => console.log('Disconnected from the WS server');
