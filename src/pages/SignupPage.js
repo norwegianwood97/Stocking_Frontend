@@ -53,7 +53,7 @@ function SignupPage() {
 
   const checkEmailAvailability = async () => {
     try {
-      const response = await axiosInstance.post('http://localhost:3000/api/idcheck', { email });
+      const response = await axiosInstance.post('/api/idcheck', { email });
       if (response.status === 200) {
         setIsEmailAvailable(true);
         alert('사용 가능한 이메일입니다.');
@@ -68,7 +68,7 @@ function SignupPage() {
     e.preventDefault();
 
     try {
-      const response = await axiosInstance.post('http://localhost:3000/api/sign-up', { nickname, email, password });
+      const response = await axiosInstance.post('/api/sign-up', { nickname, email, password });
       if (response.status === 200) {
         // 회원가입 성공 시 리다이렉트
         alert(response.data.message);
