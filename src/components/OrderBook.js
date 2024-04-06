@@ -5,7 +5,7 @@ import './OrderBook.css'; // CSS 스타일시트 임포트
 function OrderBook() {
   const [orderBook, setOrderBook] = useState([]);
   const [currentPrice, setCurrentPrice] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 관리
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 관리 useState 추가
   const { companyId } = useParams();
 
   useEffect(() => {
