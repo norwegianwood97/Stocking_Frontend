@@ -8,6 +8,7 @@ const Chat = () => {
   const ws = useRef(null);
 
   useEffect(() => {
+    // WebSocket 연결
     ws.current = new WebSocket(`wss://api.stockingchallenge.site/ws/chartData/${companyId}`);
 
     ws.current.onopen = () => console.log('Connected to the WS server');
