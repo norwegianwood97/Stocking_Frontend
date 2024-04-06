@@ -23,7 +23,7 @@ function Chart() {
 
   // WebSocket connection for real-time data
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:3000/ws/chartData/${companyId}`);
+    const ws = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/ws/chartData/${companyId}`);
 
     ws.onmessage = (event) => {
       const { currentPrice } = JSON.parse(event.data); // 현재 가격만 추출
