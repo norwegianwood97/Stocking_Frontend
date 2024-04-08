@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../api/axios.js';
 import './LoginPage.css'; // 스타일시트 임포트
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function LoginPage() {
   // 이곳에 로그인 로직을 추가하세요.
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const navigate = useNavigate(); // useNavigate hook 추가
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const error = searchParams.get('error');
+    if (error) {
+      switch (error) {
+        case 'emailAlreadyExists':
+          alert('이 이메일은 이미 가입되어 있습니다 다른 메일을 이용하시거나 원래 사용하셨던 방식으로 로그인해주세요.');
+          break;
+        // 기타 다른 에러 타입에 대한 처리
+        default:
+          alert('로그인 중 알 수 없는 오류가 발생했습니다. 다시 소셜 로그인을 시도해 주세요');
+      }
+      navigate('/login');
+    }
+  }, [location.search, navigate]);
 
   const handleLogin = async (event) => {
     event.preventDefault(); // 폼 제출 기본 이벤트 방지
@@ -32,8 +50,8 @@ function LoginPage() {
         window.location.href = response.data.redirectURL;
       }
     } catch (error) {
-      //alert(error.response.data.error.message);
-      alert(`${error}`);
+      console.log(error.response.data.message.message);
+      alert(`${error.response.data.message.message}`);
     }
   };
 
