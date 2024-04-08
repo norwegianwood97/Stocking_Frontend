@@ -71,6 +71,7 @@ function Chart() {
       type: 'value',
       axisLabel: {
         show: true,
+        interval: 50000,
         inside: false, // 라벨을 차트 영역 바깥에 놓습니다.
         formatter: '{value}', // y축 라벨의 표시 방식을 변경하고 싶으면 수정합니다.
       },
