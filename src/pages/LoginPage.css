@@ -15,6 +15,13 @@
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
   }
+
+  .special-text {
+    font-weight: bold; /* 굵은 글꼴 적용 */
+    /* 다른 스타일을 추가하여 디자인을 화려하게 만듦 */
+    /* 다른 필요한 스타일 추가 */
+  }
+  
   
   .login-title {
     font-size: 1.5rem;

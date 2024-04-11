@@ -84,7 +84,7 @@ function SignupPage() {
     <div className="signup-container">
       <div className="signup-card">
         <h2 className="signup-title">회원가입</h2>
-        <p className="signup-subtitle">OO사이트에서 새로운 계정을 만드세요!</p>
+        <p className="signup-subtitle"><span className="special-text">STOCKING</span> 에서 새로운 계정을 만드세요!</p>
         <form className="signup-form" onSubmit={handleSubmit}>
           <input placeholder="이름" value={nickname} onChange={(e) => setNickname(e.target.value)} />
           <div className="email-input-container">

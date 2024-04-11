@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './OrderPage.css';
+import Chatting from '../components/Chatting.js';
 import axios from '../api/axios.js';
 
 const SortButton = ({ text, sortKey, onSort, sortOrder }) => {
@@ -29,7 +30,12 @@ function OrderPage() {
   const [sortOrder2, setSortOrder2] = useState('');
   const [deleteOrderId, setDeleteOrderId] = useState(null); // 삭제할 주문 ID
   const [showDeleteModal, setShowDeleteModal] = useState(false); // 모달 표시 여부
+  const [showChat, setShowChat] = useState(false); // 초기 상태는 false로 채팅창을 숨깁니다.
 
+  const toggleChat = () => {
+    setShowChat((prevShowChat) => !prevShowChat); // 이전 상태를 반전시켜 채팅창을 토글합니다.
+  };
+  
   useEffect(() => {
     // 검색어가 비어 있을 때에만 모든 주식 목록을 불러옴
     if (!searchTerm) {
@@ -532,7 +538,13 @@ function OrderPage() {
         </div>
         //   </div>
         // </div>
-      )}
+      )}<label className="switch">
+      <input type="checkbox" checked={showChat} onChange={toggleChat} />
+      <span className="slider round"></span>
+    </label>    
+            <div>
+            {showChat && <Chatting />}
+      </div>
     </div>
   );
 }

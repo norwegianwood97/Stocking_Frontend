@@ -7,6 +7,7 @@ const Chat = () => {
   const [input, setInput] = useState('');
   const ws = useRef(null);
 
+  
   useEffect(() => {
     // WebSocket 연결
     ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/ws/chatting`);
@@ -81,7 +82,7 @@ const MessageList = ({ messages }) => {
 const MessageInput = ({ input, setInput, sendMessage }) => (
   <div className="input-container">
     <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && sendMessage()} />
-    <button onClick={sendMessage}>Send</button>
+    <button className="newButton" onClick={sendMessage}>Send</button>
   </div>
 );
 

@@ -59,7 +59,7 @@ function LoginPage() {
     <div className="login-container">
       <div className="login-card">
         <h2 className="login-title">로그인</h2>
-        <p className="login-subtitle">모의주식투자를 위한 OO사이트에 오신 것을 환영합니다!</p>
+        <p className="login-subtitle">모의주식투자를 위한 <span className="special-text">STOCKING</span>에 오신 것을 환영합니다!</p>
         <form className="login-form" onSubmit={handleLogin}>
           <input type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -92,7 +92,7 @@ function LoginPage() {
           </a>
         </div>
         <div className="signup-prompt">
-          아직 OO Member가 아니신가요? <a href="/signup">회원가입</a>
+          아직 <span className="special-text">STOCKING</span> Member가 아니신가요? <a href="/signup">회원가입</a>
         </div>
       </div>
     </div>
