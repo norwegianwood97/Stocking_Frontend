@@ -219,33 +219,44 @@ function OrderPage() {
 
   const handleEditSubmit = async (event) => {
     event.preventDefault();
-    // 수정할 주문의 ID를 URL에 포함
     const url = `/api/order?orderId=${editingStock.orderId}`;
-    // 수정할 데이터 구성
     const updatedOrder = {
-      price: editingStock.price,    // 사용자가 입력한 새로운 가격
-      companyId: editingStock.companyId,  // 기존의 회사 ID
-      quantity: editingStock.quantity,    // 사용자가 입력한 새로운 수량
-      type: editingStock.type   // 기존의 주문 유형
+      price: editingStock.price,
+      companyId: editingStock.companyId,
+      quantity: editingStock.quantity,
+      type: editingStock.type
     };
   
     try {
-      // axios.put 메서드를 사용하여 수정된 주문 정보를 서버로 전송
       const response = await axios.put(url, updatedOrder);
       console.log('Order successfully updated:', response.data);
   
-      // 상태 업데이트 및 모달 닫기
+      // 주문 목록 상태 업데이트
+      setStocks((prevStocks) => {
+        return prevStocks.map(stock => {
+          if (stock.orderId === editingStock.orderId) {
+            // 해당 주문을 새로운 데이터로 업데이트
+            return { ...stock, ...updatedOrder };
+          }
+          return stock;
+        });
+      });
+  
+      // 모달 닫기 및 초기 상태로 리셋
       setEditingStock(null);
-      // 여기에 주문 목록 상태를 업데이트하는 코드를 추가할 수 있습니다.
+      
       // 수정이 완료되었다는 알림 표시
-      alert('수정이 완료되었습니다!');
-    
-      // 페이지 새로고침
-      window.location.reload();
+      alert(response.data.message);
     } catch (error) {
-      console.error('Error updating order:', error);
+      if (error.response) {
+        alert(error.response.data.message);
+        console.error('Error updating order:', error.response.data.message);
+      } else {
+        console.error('Error updating order:', error.message);
+      }
     }
   };
+  
   // 삭제 함수
 const handleDeleteClick = (orderId) => { 
   if (!orderId) {
