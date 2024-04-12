@@ -31,6 +31,7 @@ function OrderPage() {
   const [deleteOrderId, setDeleteOrderId] = useState(null); // 삭제할 주문 ID
   const [showDeleteModal, setShowDeleteModal] = useState(false); // 모달 표시 여부
   
+  
   useEffect(() => {
     // 검색어가 비어 있을 때에만 모든 주식 목록을 불러옴
     if (!searchTerm) {
@@ -47,7 +48,7 @@ function OrderPage() {
               quantity: order.quantity,
               date: order.updatedAt,
               details: order,
-            }))
+            })),
           );
         })
         .catch((error) => console.error('Error fetching data:', error));
@@ -245,15 +246,43 @@ function OrderPage() {
       console.error('Error updating order:', error);
     }
   };
-  
   // 삭제 함수
-  const handleDeleteClick = (orderId) => {
+const handleDeleteClick = (orderId) => { 
+  if (!orderId) {
+    console.log("OrderId is undefined, fetching data...");
+    fetchData(() => setShowDeleteModal(true));  // 데이터 새로고침 후 모달 표시
+  } else {
     setDeleteOrderId(orderId);
-    setShowDeleteModal(true); // 모달 창 표시
-  };
+    setShowDeleteModal(true);  // 정상적인 orderId가 있을 경우 모달 창 표시
+  }
+};
 
+const fetchData = (callback) => {
+  axios.get('/api/order')
+    .then((response) => {
+      setStocks(response.data);
+      const foundOrder = response.data.find(order => order.orderId);  // 새 데이터에서 orderId를 찾습니다.
+      if (foundOrder) {
+        setDeleteOrderId(foundOrder.orderId);
+        console.log("Data refreshed and orderId updated.");
+        callback();  // 콜백 함수로 모달 표시
+      } else {
+        alert("주문 데이터를 불러올 수 없습니다. 나중에 다시 시도해주세요.");
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+      alert("데이터 새로고침에 실패했습니다.");
+    });
+};
+
+const removeDeletedOrder = (orderId) => {
+  const updatedStocks = stocks.filter((stock) => stock.orderId !== orderId);
+  setStocks(updatedStocks);
+};
   // 실제 삭제 작업 수행
   const handleDeleteConfirm = () => {
+    console.log(`Setting deleteOrderId: ${deleteOrderId}`);
     if (!deleteOrderId) {
       console.error('Delete operation failed: No orderId specified');
       return;
@@ -263,9 +292,9 @@ function OrderPage() {
       .delete(`/api/order?orderId=${deleteOrderId}`)
       .then((response) => {
         console.log('Order successfully deleted:', response);
+        alert('주문 취소에 성공했습니다!'); // 여기에 알림 추가
         setShowDeleteModal(false); // 삭제 성공 후 모달 창 숨기기
-        const updatedStocks = stocks.filter((stock) => stock.orderId !== deleteOrderId);
-        setStocks(updatedStocks); // 상태 업데이트
+        removeDeletedOrder(deleteOrderId); // 삭제된 주문 상태 업데이트
       })
       .catch((error) => {
         console.error('Error deleting order:', error);
