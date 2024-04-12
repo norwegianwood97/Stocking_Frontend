@@ -75,7 +75,6 @@
  .chat-container {
   width: 100%; /* 전체 화면 너비를 사용 */
   height: 40%; /* 화면 높이의 20%만큼만 사용 */
-  max-height: 320px; /* 채팅창의 최대 높이를 200px로 설정 */
   position: fixed; /* 페이지 내에서 채팅창의 위치를 고정 */
   bottom: 0; /* 하단에서 0px 떨어진 위치에 배치 */
   left: 0; /* 왼쪽에서 0px 떨어진 위치에 배치 */
@@ -93,6 +92,7 @@
 }
 
 .input-container {
+  display: flex;
   position: absolute; /* 입력 영역을 채팅창 내에서 고정 위치에 배치 */
   bottom: 0; /* 입력 영역을 채팅창 하단에 위치 */
   width: 100%; /* 입력 영역의 너비를 채팅창 너비에 맞춤 */
@@ -113,3 +113,13 @@
 .newButton:hover {
   background-color: #0077b5; /* 호버 시 배경색 변경 */
 }
+.resize-handle {
+  width: 100%;
+  height: 5px;
+  background-color: #ddd;
+  cursor: ns-resize;
+  position: absolute;
+  top: 0;
+}
+
+
