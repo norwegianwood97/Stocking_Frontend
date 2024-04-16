@@ -37,11 +37,15 @@ function OrderPage() {
     if (!searchTerm) {
       axios
         .get('/api/order')
-        .then((response) => response.data)
+        .then((response) => {
+          console.log('Fetched orders:', response.data); // 데이터 로깅 추가
+          return response.data;
+        })
         .then((data) => {
           setStocks(
             // 여기서 setStocks 대신 setSearchResults를 호출해야 함
             data.map((order) => ({
+              orderId:order.orderId,
               name: order.Company.name,
               symbol: order.Company.companyId,
               price: order.price,
@@ -241,12 +245,16 @@ function OrderPage() {
           return stock;
         });
       });
+
+      setSelectedStock(null);
   
-      // 모달 닫기 및 초기 상태로 리셋
+      // 모달 닫기 및 초기 상태로 리셋w
       setEditingStock(null);
       
       // 수정이 완료되었다는 알림 표시
       alert(response.data.message);
+
+      
     } catch (error) {
       if (error.response) {
         alert(error.response.data.message);
@@ -272,7 +280,7 @@ const fetchData = (callback) => {
   axios.get('/api/order')
     .then((response) => {
       setStocks(response.data);
-      const foundOrder = response.data.find(order => order.orderId);  // 새 데이터에서 orderId를 찾습니다.
+      const foundOrder = response.data.find(order => order.orderId !== undefined);  // 새 데이터에서 orderId를 찾습니다.
       if (foundOrder) {
         setDeleteOrderId(foundOrder.orderId);
         console.log("Data refreshed and orderId updated.");
