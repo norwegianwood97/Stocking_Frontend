@@ -115,13 +115,9 @@ const OrderForm = () => {
       <div className="user-info-container">
         <table className="user-info-table">
           <tbody>
-            <tr>자산: {userInfo.currentMoney}원</tr>
-            <tr>총액: {userInfo.totalAsset}원</tr>
-            <tr>
-              주문 가능한 예산
-              <br /> {userInfo.tradableMoney}원
-            </tr>
-            {/* Add more rows for additional user info if necessary */}
+            <tr>예수금 : {userInfo.currentMoney}원</tr>
+            <tr>순자산 : {userInfo.totalAsset}원</tr>
+            <tr>가용 금액: {userInfo.tradableMoney}원</tr>
           </tbody>
         </table>
       </div>
@@ -137,11 +133,9 @@ const OrderForm = () => {
               <tbody>
                 <tr>회사명: {stock.Company.name}</tr>
                 <tr>주식 수: {stock.quantity}</tr>
+                <tr>가용 주식: {stock.tradableQuantity}</tr>
                 <tr>현재가: {stock.Company.currentPrice}원</tr>
                 <tr>평단가: {stock.averagePrice.toFixed(0)}원</tr>
-                <tr>
-                  주문 가능 주식 수<br /> {stock.tradableQuantity}
-                </tr>
                 <tr>&nbsp;</tr>
               </tbody>
             </table>

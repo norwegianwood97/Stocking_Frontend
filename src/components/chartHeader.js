@@ -1,6 +1,6 @@
 // src/components/Header.js
 import React, { useState, useEffect } from 'react';
-import { useParams,Link  } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './chartHeader.css';
 import axios from '../api/axios';
 
@@ -31,7 +31,7 @@ const ChartHeader = () => {
           <h1>{companyName}</h1>
         </div>
         <div className="Header-group_two">
-        <Link to="/order" className="Header-linkss" id="checkOrder">
+          <Link to="/order" className="Header-linkss" id="checkOrder">
             주문 확인
           </Link>
         </div>
