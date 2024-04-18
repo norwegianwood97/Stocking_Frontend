@@ -30,22 +30,21 @@ function OrderPage() {
   const [sortOrder2, setSortOrder2] = useState('');
   const [deleteOrderId, setDeleteOrderId] = useState(null); // 삭제할 주문 ID
   const [showDeleteModal, setShowDeleteModal] = useState(false); // 모달 표시 여부
-  const [showChat, setShowChat] = useState(false); // 초기 상태는 false로 채팅창을 숨깁니다.
 
-  const toggleChat = () => {
-    setShowChat((prevShowChat) => !prevShowChat); // 이전 상태를 반전시켜 채팅창을 토글합니다.
-  };
-  
   useEffect(() => {
     // 검색어가 비어 있을 때에만 모든 주식 목록을 불러옴
     if (!searchTerm) {
       axios
         .get('/api/order')
-        .then((response) => response.data)
+        .then((response) => {
+          console.log('Fetched orders:', response.data); // 데이터 로깅 추가
+          return response.data;
+        })
         .then((data) => {
           setStocks(
             // 여기서 setStocks 대신 setSearchResults를 호출해야 함
             data.map((order) => ({
+              orderId: order.orderId,
               name: order.Company.name,
               symbol: order.Company.companyId,
               price: order.price,
@@ -227,38 +226,84 @@ function OrderPage() {
     const url = `/api/order?orderId=${editingStock.orderId}`;
     // 수정할 데이터 구성
     const updatedOrder = {
-      price: editingStock.price,    // 사용자가 입력한 새로운 가격
-      companyId: editingStock.companyId,  // 기존의 회사 ID
-      quantity: editingStock.quantity,    // 사용자가 입력한 새로운 수량
-      type: editingStock.type   // 기존의 주문 유형
+      price: editingStock.price, // 사용자가 입력한 새로운 가격
+      companyId: editingStock.companyId, // 기존의 회사 ID
+      quantity: editingStock.quantity, // 사용자가 입력한 새로운 수량
+      type: editingStock.type, // 기존의 주문 유형
     };
-  
+
     try {
       // axios.put 메서드를 사용하여 수정된 주문 정보를 서버로 전송
       const response = await axios.put(url, updatedOrder);
       console.log('Order successfully updated:', response.data);
-  
-      // 상태 업데이트 및 모달 닫기
+
+      // 주문 목록 상태 업데이트
+      setStocks((prevStocks) => {
+        return prevStocks.map((stock) => {
+          if (stock.orderId === editingStock.orderId) {
+            // 해당 주문을 새로운 데이터로 업데이트
+            return { ...stock, ...updatedOrder };
+          }
+          return stock;
+        });
+      });
+      setSelectedStock(null);
+
+      // 모달 닫기 및 초기 상태로 리셋
       setEditingStock(null);
       // 여기에 주문 목록 상태를 업데이트하는 코드를 추가할 수 있습니다.
       // 수정이 완료되었다는 알림 표시
-      alert('수정이 완료되었습니다!');
-    
+      alert(response.data.message);
+
       // 페이지 새로고침
       window.location.reload();
     } catch (error) {
-      console.error('Error updating order:', error);
+      if (error.response) {
+        alert(error.response.data.message);
+        console.error('Error updating order:', error.response.data.message);
+      } else {
+        console.error('Error updating order:', error.message);
+      }
     }
   };
-  
+
   // 삭제 함수
   const handleDeleteClick = (orderId) => {
-    setDeleteOrderId(orderId);
-    setShowDeleteModal(true); // 모달 창 표시
+    if (!orderId) {
+      console.log('OrderId is undefined, fetching data...');
+      fetchData(() => setShowDeleteModal(true)); // 데이터 새로고침 후 모달 표시
+    } else {
+      setDeleteOrderId(orderId);
+      setShowDeleteModal(true); // 정상적인 orderId가 있을 경우 모달 창 표시
+    }
+  };
+  const fetchData = (callback) => {
+    axios
+      .get('/api/order')
+      .then((response) => {
+        setStocks(response.data);
+        const foundOrder = response.data.find((order) => order.orderId !== undefined); // 새 데이터에서 orderId를 찾습니다.
+        if (foundOrder) {
+          setDeleteOrderId(foundOrder.orderId);
+          console.log('Data refreshed and orderId updated.');
+          callback(); // 콜백 함수로 모달 표시
+        } else {
+          alert('주문 데이터를 불러올 수 없습니다. 나중에 다시 시도해주세요.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        alert('데이터 새로고침에 실패했습니다.');
+      });
   };
 
+  const removeDeletedOrder = (orderId) => {
+    const updatedStocks = stocks.filter((stock) => stock.orderId !== orderId);
+    setStocks(updatedStocks);
+  };
   // 실제 삭제 작업 수행
   const handleDeleteConfirm = () => {
+    console.log(`Setting deleteOrderId: ${deleteOrderId}`);
     if (!deleteOrderId) {
       console.error('Delete operation failed: No orderId specified');
       return;
@@ -268,9 +313,9 @@ function OrderPage() {
       .delete(`/api/order?orderId=${deleteOrderId}`)
       .then((response) => {
         console.log('Order successfully deleted:', response);
+        alert('주문 취소에 성공했습니다!'); // 여기에 알림 추가
         setShowDeleteModal(false); // 삭제 성공 후 모달 창 숨기기
-        const updatedStocks = stocks.filter((stock) => stock.orderId !== deleteOrderId);
-        setStocks(updatedStocks); // 상태 업데이트
+        removeDeletedOrder(deleteOrderId); // 삭제된 주문 상태 업데이트
       })
       .catch((error) => {
         console.error('Error deleting order:', error);
@@ -393,21 +438,25 @@ function OrderPage() {
         </div>
         {/* 모달 창 코드를 여기에 삽입 */}
         {showDeleteModal && (
-  <div className="delete-confirmation-modal">
-    <div className="modal-content rounded">
-      <div className="modal-header">
-        <h5 className="modal-title">주문 삭제 확인</h5>
-      </div>
-      <div className="modal-body">
-        <p>정말 해당 주문을 취소하시겠습니까?</p>
-      </div>
-      <div className="modal-footer">
-        <button className="btn btn-primary" onClick={handleDeleteConfirm}>예</button>
-        <button className="btn btn-secondary" onClick={() => setShowDeleteModal(false)}>아니오</button>
-      </div>
-    </div>
-  </div>
-)}
+          <div className="delete-confirmation-modal">
+            <div className="modal-content rounded">
+              <div className="modal-header">
+                <h5 className="modal-title">주문 삭제 확인</h5>
+              </div>
+              <div className="modal-body">
+                <p>정말 해당 주문을 취소하시겠습니까?</p>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-primary" onClick={handleDeleteConfirm}>
+                  예
+                </button>
+                <button className="btn btn-secondary" onClick={() => setShowDeleteModal(false)}>
+                  아니오
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="stock-details-container">
           {selectedStock && selectedStock.details ? (
             <div className="stock-details">
@@ -531,22 +580,18 @@ function OrderPage() {
                 취소
               </button>
               <button type="button" className="btn btn-primary" onClick={(e) => handleEditSubmit(e)}>
-  수정 완료
-</button>
+                수정 완료
+              </button>
             </div>
           </div>
         </div>
         //   </div>
         // </div>
-      )}<label className="switch">
-      <input type="checkbox" checked={showChat} onChange={toggleChat} />
-      <span className="slider round"></span>
-    </label>    
-            <div>
-            {showChat && <Chatting />}
+      )}
+      <div>
+        <Chatting />
       </div>
     </div>
   );
 }
-
 export default OrderPage;
