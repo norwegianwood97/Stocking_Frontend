@@ -136,7 +136,6 @@ const OrderForm = () => {
                 <tr>가용 주식: {stock.tradableQuantity}</tr>
                 <tr>현재가: {stock.Company.currentPrice}원</tr>
                 <tr>평단가: {stock.averagePrice.toFixed(0)}원</tr>
-
                 <tr>&nbsp;</tr>
               </tbody>
             </table>

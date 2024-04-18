@@ -257,6 +257,7 @@ function OrderPage() {
 
       // 페이지 새로고침
       window.location.reload();
+      
     } catch (error) {
       if (error.response) {
         alert(error.response.data.message);
