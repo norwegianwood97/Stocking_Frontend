@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import './OrderBook.css'; // CSS 스타일시트 임포트
 
@@ -7,65 +7,69 @@ function OrderBook() {
   const [currentPrice, setCurrentPrice] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 관리
   const { companyId } = useParams();
+  const ws = useRef(null);
 
   useEffect(() => {
     setIsLoading(true); // 데이터 요청 시작
-    const ws = new WebSocket(`ws://localhost:3000/ws/orderData/${companyId}`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/ws/orderData/${companyId}`);
 
-    ws.onmessage = (event) => {
+    ws.current.onopen = () => {
+      console.log('Connected to WS server for order data');
+    };
+
+    ws.current.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      const groupedOrders = message.groupedOrders;
-      const currentPrice = message.currentPrice;
+      if (message.type === 'orderData') {
+        // 메시지 타입 확인
+        const { groupedOrders, currentPrice } = message.data;
 
-      if (Array.isArray(groupedOrders)) {
-        const maxQuantity = Math.max(...groupedOrders.map((order) => order._sum.quantity));
-        let processedOrders = groupedOrders.map((order) => ({
-          ...order,
-          barLength: (order._sum.quantity / maxQuantity) * 100,
-        }));
-
-        // 가격 범위 생성
-        const priceRange = Array.from({ length: 11 }, (_, i) => currentPrice + 50000 - i * 10000);
-
-        // 가격 범위 내의 각 가격에 대해 주문 데이터가 있는지 확인, 없으면 빈 주문 데이터를 생성하여 추가
-        processedOrders = priceRange.map((price) => {
-          const existingOrder = processedOrders.find((order) => order.price === price);
-          if (existingOrder) {
-            return existingOrder;
-          } else {
-            // 주문이 없는 가격에 대한 객체 생성
-            return {
-              price,
-              _sum: { quantity: 0 },
-              type: 'none', // 'buy' 또는 'sell' 대신 'none' 사용
-              barLength: 0, // 주문량이 없으므로 barLength는 0
-            };
-          }
-        });
-
-        // 최대 주문량 재계산을 위해 업데이트된 주문 데이터 사용
-        const maxQuantityUpdated = Math.max(...processedOrders.map((order) => order._sum.quantity));
-        processedOrders = processedOrders.map((order) => ({
-          ...order,
-          barLength: order._sum.quantity > 0 ? (order._sum.quantity / maxQuantityUpdated) * 100 : 0,
-        }));
-
-        setOrderBook(processedOrders); // 업데이트된 주문 데이터 상태 업데이트
-        setCurrentPrice(currentPrice);
-        setIsLoading(false); // 데이터 로딩 완료
-      } else {
-        console.warn('Received data is not an array:', groupedOrders);
-        setIsLoading(false);
+        if (Array.isArray(groupedOrders)) {
+          processOrderData(groupedOrders, currentPrice); // 호가 데이터 처리 로직
+        } else {
+          console.warn('Received data is not an array:', groupedOrders);
+          setIsLoading(false);
+        }
       }
     };
 
-    return () => ws.close();
-  }, [companyId]);
+    ws.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    ws.current.onclose = () => {
+      console.log('Disconnected from WS server for order data');
+    };
+
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+      }
+    };
+  }, [companyId]); // companyId가 변경될 때마다 useEffect가 재실행됩니다.
+
+  // 호가 데이터 처리 로직을 별도의 함수로 분리
+  function processOrderData(groupedOrders, currentPrice) {
+    const maxQuantity = Math.max(...groupedOrders.map((order) => order._sum.quantity));
+    let processedOrders = groupedOrders.map((order) => ({
+      ...order,
+      barLength: (order._sum.quantity / maxQuantity) * 100,
+    }));
+
+    // 가격 범위 생성 및 데이터 매핑 로직
+    const priceRange = Array.from({ length: 11 }, (_, i) => currentPrice + 50000 - i * 10000);
+    processedOrders = priceRange.map((price) => {
+      const existingOrder = processedOrders.find((order) => order.price === price);
+      return existingOrder || { price, _sum: { quantity: 0 }, type: 'none', barLength: 0 };
+    });
+
+    setOrderBook(processedOrders); // 업데이트된 주문 데이터 상태 업데이트
+    setCurrentPrice(currentPrice);
+    setIsLoading(false); // 데이터 로딩 완료
+  }
 
   return (
     <div className="orderBook">
       <h2>호가창</h2>
-
       <table>
         <thead>
           <tr>
@@ -74,7 +78,7 @@ function OrderBook() {
             <th>매수주문</th>
           </tr>
         </thead>
-        {isLoading && <div className="loading-indicator">Loading...</div>} {/* 로딩 인디케이터 추가 */}
+        {isLoading && <div className="loading-indicator">Loading...</div>}
         <tbody>
           {orderBook.map((order, index) => (
             <tr key={index}>

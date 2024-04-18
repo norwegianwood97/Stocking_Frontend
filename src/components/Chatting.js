@@ -5,11 +5,15 @@ import './Chatting.css';
 const Chat = () => {
   const { messages, setMessages } = useChat();
   const [input, setInput] = useState('');
+  const [chatHeight, setChatHeight] = useState('300px'); // 기본 채팅창 높이 설정
   const ws = useRef(null);
+  const chatContainerRef = useRef(null);
+  const resizingRef = useRef(false);
 
   useEffect(() => {
-    ws.current = new WebSocket('ws://localhost:3000/ws/chatting');
-
+    // WebSocket 연결
+    ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/ws/chatting/`);
+    console.log('ws.current:', ws.current);
     ws.current.onopen = () => console.log('Connected to the WS server');
     ws.current.onclose = () => console.log('Disconnected from the WS server');
     ws.current.onmessage = (e) => {
@@ -49,8 +53,32 @@ const Chat = () => {
     }
   };
 
+  // 드래그 시작 핸들러
+  const startResizing = (e) => {
+    e.preventDefault();
+    resizingRef.current = true;
+    document.addEventListener('mousemove', resizeChat);
+    document.addEventListener('mouseup', stopResizing);
+  };
+
+  // 채팅창 크기 조절 핸들러
+  const resizeChat = (e) => {
+    if (resizingRef.current) {
+      const newHeight = window.innerHeight - e.clientY;
+      setChatHeight(`${newHeight}px`);
+    }
+  };
+
+  // 드래그 종료 핸들러
+  const stopResizing = () => {
+    resizingRef.current = false;
+    document.removeEventListener('mousemove', resizeChat);
+    document.removeEventListener('mouseup', stopResizing);
+  };
+
   return (
-    <div className="chat-container">
+    <div className="chat-container" ref={chatContainerRef} style={{ height: chatHeight }}>
+      <div className="resize-handle" onMouseDown={startResizing}></div>
       <MessageList messages={messages} />
       <MessageInput input={input} setInput={setInput} sendMessage={sendMessage} />
     </div>
@@ -80,7 +108,7 @@ const MessageList = ({ messages }) => {
 const MessageInput = ({ input, setInput, sendMessage }) => (
   <div className="input-container">
     <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && sendMessage()} />
-    <button onClick={sendMessage}>Send</button>
+    <button className="newButton" onClick={sendMessage}>Send</button>
   </div>
 );
 

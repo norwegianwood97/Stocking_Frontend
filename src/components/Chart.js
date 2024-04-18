@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactEcharts from 'echarts-for-react';
 import { useParams } from 'react-router-dom';
-import axios from '../api/axios'; // Ensure axios is imported
+import axios from '../api/axios';
 
 function Chart() {
   const { companyId } = useParams();
   const echartRef = useRef(null);
   const [companyName, setCompanyName] = useState('');
+  const ws = useRef(null);
 
-  // Fetch the company name
+  // 회사 이름을 가져옵니다.
   useEffect(() => {
     const fetchCompanyName = async () => {
       try {
         const response = await axios.post('/api/companyName', { companyId: companyId });
-        setCompanyName(response.data[0].name); // Assuming the response structure
+        setCompanyName(response.data[0].name); // 응답 구조를 가정합니다.
       } catch (error) {
         console.error('Failed to fetch company name', error);
       }
@@ -21,61 +22,76 @@ function Chart() {
     fetchCompanyName();
   }, [companyId]);
 
-  // WebSocket connection for real-time data
+  // 실시간 차트 데이터를 위한 WebSocket 연결
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:3000/ws/chartData/${companyId}`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/ws/chartData/${companyId}`);
 
-    ws.onmessage = (event) => {
-      const { currentPrice, initialPrice, highPrice, lowPrice } = JSON.parse(event.data);
-      const currentTime = new Date().getTime();
-      const newData = [currentTime, initialPrice, highPrice, lowPrice, currentPrice];
-      if (echartRef.current) {
-        const echartInstance = echartRef.current.getEchartsInstance();
-        const option = echartInstance.getOption();
-        option.series[0].data.push(newData);
-        // 10초 이상된 데이터를 필터링합니다.
-        const tenSecondsAgo = currentTime - 8000; // 현재시간에서 10초를 빼서 계산합니다.
-        option.series[0].data = option.series[0].data.filter((data) => data[0] > tenSecondsAgo);
+    ws.current.onopen = () => {
+      console.log('Connected to WS server for chart data');
+    };
 
-        // 옵션을 업데이트합니다.
-        echartInstance.setOption(option, false);
+    ws.current.onmessage = (event) => {
+      const receivedData = JSON.parse(event.data);
+      console.log('차트데이터로 받은 데이터: ', receivedData);
+      console.log('차트 데이터의 타입: ', receivedData.type);
+
+      if (receivedData.type === 'chartData') {
+        const { currentPrice, initialPrice } = receivedData.data; // 수정된 부분
+
+        if (currentPrice !== undefined && initialPrice !== undefined) {
+          const currentTime = new Date().getTime(); // 현재 시간
+          const newData = [currentTime, currentPrice]; // 새 데이터 배열 구성
+
+          if (echartRef.current) {
+            const echartInstance = echartRef.current.getEchartsInstance();
+            const option = echartInstance.getOption();
+            option.series[0].data.push(newData);
+
+            // 10초 이상된 데이터를 필터링
+            const tenSecondsAgo = currentTime - 10000;
+            option.series[0].data = option.series[0].data.filter((item) => item[0] > tenSecondsAgo);
+
+            echartInstance.setOption(option, false);
+          }
+        }
       }
     };
 
-    return () => ws.close();
+    ws.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    ws.current.onclose = () => {
+      console.log('Disconnected from WS server for chart data');
+    };
+
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+      }
+    };
   }, [companyId]);
 
-  // Initial chart options
+  // 초기 차트 옵션 설정
   const initialOption = {
-    title: {
-      // Dynamically set the title
-    },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: { type: 'cross' },
-      formatter: null, // 기본 포맷을 사용하도록 설정
-    },
-
-    grid: {
-      containLabel: true, // 라벨이 차트 영역 내에 있도록 합니다.
-    },
+    title: { text: companyName || 'Current Price' },
+    tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+    grid: { containLabel: true },
     xAxis: { type: 'time' },
     yAxis: {
       type: 'value',
-      axisLabel: {
-        show: true,
-        inside: false, // 라벨을 차트 영역 바깥에 놓습니다.
-        formatter: '{value}', // y축 라벨의 표시 방식을 변경하고 싶으면 수정합니다.
-      },
+      axisLabel: { show: true, interval: 'auto', formatter: '{value}' },
     },
-    series: [{ type: 'candlestick', name: companyName, data: [] }],
-    dataZoom: [{ type: 'inside', start: 0, end: 100, xAxisIndex: [0] }],
+    series: [{ type: 'line', data: [], smooth: true }],
+    dataZoom: [{ type: 'inside', start: 0, end: 100 }],
   };
+
   return (
-    <div style={{ width: '100%', maxWidth: '2000px', height: '1000px', marginLeft: '-100px' }} id="charts">
+    <div style={{ width: '100%', maxWidth: '2000px', height: '1000px', marginLeft: '-100px' }}>
       <ReactEcharts ref={echartRef} option={initialOption} />
     </div>
   );
 }
 
 export default Chart;
+  

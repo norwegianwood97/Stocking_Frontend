@@ -487,3 +487,61 @@ button.btn:hover, button.sort-button:hover, .stock-item button:hover {
   background: none; /* 버튼 배경색 제거 */
 }
 
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px; /* 너비를 60px에서 40px로 줄임 */
+  height: 24px; /* 높이를 34px에서 24px로 줄임 */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px; /* 둥근 모서리 추가 */
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px; /* 내부 원의 높이를 26px에서 16px로 줄임 */
+  width: 16px; /* 내부 원의 너비를 26px에서 16px로 줄임 */
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%; /* 원 모양을 유지 */
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px); /* 체크 시 내부 원을 오른쪽으로 16px 이동 */
+}
+
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
