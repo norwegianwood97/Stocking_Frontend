@@ -71,7 +71,14 @@ const Chat = () => {
 
   const sendMessage = () => {
     if (input.trim()) {
-      const messageToSend = { text: input, isMine: true, timestamp: new Date().toLocaleTimeString() }; // 메시지 보낼 때 현재 시간 추가
+      const messageToSend = {
+        type: 'chat',
+        userId: userInfo.userId,
+        nickname: userInfo.nickname, // 닉네임 추가
+        text: input,
+        isMine: true,
+        timestamp: new Date().toLocaleTimeString(),
+      };
       ws.current.send(JSON.stringify(messageToSend));
       setMessages((prevMessages) => [...prevMessages, messageToSend]);
       setInput('');
@@ -121,7 +128,7 @@ const MessageList = ({ messages }) => {
     <ul className="message-list">
       {messages.map((message, index) => (
         <li key={index} className={message.isMine ? 'my-message' : 'other-message'}>
-          {(!message.isMine ? `${message.nickname || '서버 메세지'}: ` : '') + message.text}
+          {(!message.isMine ? `${message.nickname || '서버 메세지'}: ` : '나: ') + message.text}
           <span className="message-timestamp">{message.timestamp}</span>
         </li>
       ))}

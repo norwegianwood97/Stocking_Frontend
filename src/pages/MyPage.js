@@ -127,7 +127,7 @@ const MyPage = () => {
   const renderRankingsTable = () => {
     return (
       <div className="section-container section">
-        <h1>대회 랭킹</h1>
+        <h1>이전 대회 랭킹</h1>
         <table>
           <thead>
             <tr>
