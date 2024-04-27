@@ -30,51 +30,57 @@ const Chat = () => {
 
   useEffect(() => {
     if (userInfo && userInfo.userId) {
-      // userInfo가 있고, userId도 있을 때만 실행
+      // userInfo가 설정된 후에 WebSocket 연결을 설정
       console.log('userId: ', userInfo.userId);
-      // WebSocket 연결
       ws.current = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/ws/chatting/${userInfo.userId}`);
-      ws.current.onopen = () => console.log('Connected to the WS server');
+
+      ws.current.onopen = () => {
+        console.log('Connected to the WS server');
+      };
+
       ws.current.onmessage = (e) => {
         const message = JSON.parse(e.data);
 
-        // message.type이 'notices'인 경우 처리
-        if (message.type === 'notices') {
-          // message.notices가 배열인지 확인, 배열이 아니면 배열로 변환
-          const noticesArray = Array.isArray(message.notices) ? message.notices : [message.notices];
+        console.log('message.userId: ', message.userId);
+        console.log('userInfo.userId: ', userInfo.userId);
+        // 메시지가 현재 사용자의 것이면 무시
+        if (message.userId === userInfo.userId) {
+          return;
+        }
 
-          // 배열을 사용하여 메시지 처리
+        // 메시지 처리 로직
+        if (message.type === 'notices') {
+          const noticesArray = Array.isArray(message.notices) ? message.notices : [message.notices];
           const newMessages = noticesArray.map((notice) => ({
             text: notice,
-            isMine: false, // 이 메시지는 사용자 자신의 것이 아니라는 것을 나타냅니다.
-            timestamp: new Date().toLocaleTimeString(), // 메시지에 현재 시간 추가
+            isMine: false,
+            timestamp: new Date().toLocaleTimeString(),
           }));
-
-          // 새 메시지 배열을 기존 메시지 목록에 추가
           setMessages((prevMessages) => [...prevMessages, ...newMessages]);
         } else {
-          // message.type이 'notices'가 아닌 다른 메시지 처리
           setMessages((prevMessages) => [...prevMessages, { ...message, isMine: false, timestamp: new Date().toLocaleTimeString() }]);
         }
       };
-      ws.current.onclose = () => console.log('Disconnected from the WS server');
-    } else {
-      console.log('userInfo.userId가 없음! userInfo: ', userInfo);
-    }
 
-    return () => {
-      if (ws.current) {
-        ws.current.close();
-      }
-    };
-  }, [userInfo]); // userInfo 자체에 의존성 추가
+      ws.current.onclose = () => {
+        console.log('Disconnected from the WS server');
+      };
+
+      return () => {
+        if (ws.current) {
+          ws.current.close();
+        }
+      };
+    }
+  }, [userInfo]); // userInfo 의존성 추가하여 상태 업데이트 감지
 
   const sendMessage = () => {
     if (input.trim()) {
       const messageToSend = {
+        id: Date.now(), // 메시지 ID로 현재 시각의 타임스탬프를 사용
         type: 'chat',
         userId: userInfo.userId,
-        nickname: userInfo.nickname, // 닉네임 추가
+        nickname: userInfo.nickname,
         text: input,
         isMine: true,
         timestamp: new Date().toLocaleTimeString(),
@@ -84,6 +90,7 @@ const Chat = () => {
       setInput('');
     }
   };
+  
 
   // 드래그 시작 핸들러
   const startResizing = (e) => {
