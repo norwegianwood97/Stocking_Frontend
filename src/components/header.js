@@ -36,11 +36,13 @@ const Header = () => {
     };
   }, []);
   const goToMyPage = () => {
+    setModalOpen(false);
     navigate('/mypage');
   };
   const handleLogout = async () => {
     try {
       await axios.delete('/api/logout'); // Perform the delete operation
+      setModalOpen(false);
       navigate('/login'); // Redirect to the login page
     } catch (error) {
       console.error('Logout failed', error);
