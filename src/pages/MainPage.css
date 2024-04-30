@@ -116,11 +116,11 @@ tr:hover {
 }
 
 .positive {
-  background-color: lightblue;
+  background-color: lightcoral;
 }
 
 .negative {
-  background-color: lightcoral;
+  background-color: lightblue;
 }
 
 .zero {
