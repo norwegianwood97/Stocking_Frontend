@@ -219,7 +219,6 @@ function OrderPage() {
   const getTransactionType = (details) => {
     return details.type === 'buy' ? '매수중' : '매도중';
   };
-  
 
   const handleEditSubmit = async (event) => {
     event.preventDefault();
@@ -258,7 +257,6 @@ function OrderPage() {
 
       // 페이지 새로고침
       window.location.reload();
-      
     } catch (error) {
       if (error.response) {
         alert(error.response.data.message);
@@ -362,7 +360,6 @@ function OrderPage() {
   const getTransactionType2 = (details) => {
     return details.type === 'buy' ? '매수주문' : '매도주문';
   };
-  
 
   // 오른쪽 박스에서 주식을 선택했을 때 호출할 함수
   const handleSelectConcludedStock = (stock) => {
@@ -377,7 +374,7 @@ function OrderPage() {
       quantity: stock.quantity,
       date: formatDate(hasCompanyObject ? stock.createdAt : stock.date),
       details: stock,
-      transactionType: transactionType // 거래 유형 정보 추가
+      transactionType: transactionType, // 거래 유형 정보 추가
     });
   };
 
@@ -417,6 +414,9 @@ function OrderPage() {
                       <div className="stock-quantity">{stock.quantity} 주</div>
                       <div className="stock-date">{formatDate(stock.date)}</div> {/* 날짜 추가 */}
                       <div className="stock-price">{formatPrice(stock.price)}</div> {/* 가격 추가 */}
+                      <div className={`stock-transaction-type ${getTransactionType(stock.details)}`}>
+                        {stock.details.type === 'buy' ? '🔼' : '🔽'} {getTransactionType(stock.details)}
+                      </div>
                     </div>
                     <button className="btn btn-success" onClick={() => handleSelectStock(stock)}>
                       선택
@@ -434,6 +434,9 @@ function OrderPage() {
                       <div className="stock-quantity">{stock.quantity} 주</div>
                       <div className="stock-date">{formatDate(stock.date)}</div> {/* 날짜 추가 */}
                       <div className="stock-price">{formatPrice(stock.price)}</div> {/* 가격 추가 */}
+                    <div className={`stock-transaction-type ${getTransactionType(stock.details)}`}>
+                      {stock.details.type === 'buy' ? '🔼' : '🔽'} {getTransactionType(stock.details)}
+                    </div>
                     </div>
                     <button className="btn btn-success" onClick={() => handleSelectStock(stock)}>
                       선택
@@ -519,6 +522,10 @@ function OrderPage() {
                       <div className="stock-quantity">{stock.quantity} 주</div>
                       <div className="stock-date">{formatDate(stock.date)}</div> {/* 날짜 추가 */}
                       <div className="stock-price">{formatPrice(stock.price)}</div> {/* 가격 추가 */}
+                    <div className={`stock-transaction-type ${getTransactionType2(stock.details)}`}>
+                      🔄 거래 유형:
+                      {getTransactionType2(stock.details)}
+                    </div>
                     </div>
                     <button className="btn btn-success" onClick={() => handleSelectConcludedStock(stock)}>
                       선택
@@ -533,6 +540,10 @@ function OrderPage() {
                       <div className="stock-quantity">{stock.quantity} 주</div>
                       <div className="stock-date">{formatDate(stock.date)}</div> {/* 날짜 추가 */}
                       <div className="stock-price">{formatPrice(stock.price)}</div> {/* 가격 추가 */}
+                    <div className={`stock-transaction-type ${getTransactionType2(stock.details)}`}>
+                      🔄 거래 유형:
+                      {getTransactionType2(stock.details)}
+                    </div>
                     </div>
                     <button className="btn btn-success" onClick={() => handleSelectConcludedStock(stock)}>
                       선택
