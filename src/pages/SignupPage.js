@@ -35,19 +35,19 @@ function SignupPage() {
     }
   };
 
-  const validateConfirmPassword = () => {
-    // 먼저, 두 입력 필드가 비어 있지 않은지 확인
-    if (password && confirmPassword) {
-      if (password !== confirmPassword) {
+  const validateConfirmPassword = (pass, confirmPass) => {
+    // 직접 입력값을 비교
+    if (pass && confirmPass) {
+      if (pass !== confirmPass) {
         setConfirmPasswordError('비밀번호가 일치하지 않습니다.');
-        setIsPasswordMatch(false); // 일치하지 않으면 false 상태
+        setIsPasswordMatch(false);
       } else {
         setConfirmPasswordError('비밀번호가 일치합니다.');
-        setIsPasswordMatch(true); // 일치하면 true 상태
+        setIsPasswordMatch(true);
       }
     } else {
-      setConfirmPasswordError(''); // 입력 필드가 비어 있으면 메시지 없음
-      setIsPasswordMatch(false); // 기본 상태는 false로 설정
+      setConfirmPasswordError('');
+      setIsPasswordMatch(false);
     }
   };
 
@@ -84,27 +84,46 @@ function SignupPage() {
     <div className="signup-container">
       <div className="signup-card">
         <h2 className="signup-title">회원가입</h2>
-        <p className="signup-subtitle"><span className="special-text">STOCKING</span> 에서 새로운 계정을 만드세요!</p>
+        <p className="signup-subtitle">
+          <span className="special-text">STOCKING</span> 에서 새로운 계정을 만드세요!
+        </p>
         <form className="signup-form" onSubmit={handleSubmit}>
           <input placeholder="이름" value={nickname} onChange={(e) => setNickname(e.target.value)} />
           <div className="email-input-container">
-  <input type="email" className="email-input" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={validateEmail} />
-  <button type="button" className="inline-check-email-button" onClick={checkEmailAvailability}>
-    중복 확인
-  </button>
-</div>
+            <input type="email" className="email-input" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={validateEmail} />
+            <button type="button" className="inline-check-email-button" onClick={checkEmailAvailability}>
+              중복 확인
+            </button>
+          </div>
           {emailError && (
             <p className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
               {emailError}
             </p>
           )}
-          <input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={validatePassword} />
+          <input
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              validateConfirmPassword(e.target.value, confirmPassword);
+            }}
+            onBlur={validatePassword}
+          />
           {passwordError && (
             <p className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
               {passwordError}
             </p>
           )}
-          <input type="password" placeholder="비밀번호 확인" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} onBlur={validateConfirmPassword} />
+          <input
+            type="password"
+            placeholder="비밀번호 확인"
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+              validateConfirmPassword(password, e.target.value);
+            }}
+          />
           {confirmPasswordError && <p className={`error-message ${isPasswordMatch ? 'success-message' : ''}`}>{confirmPasswordError}</p>}
 
           <button type="submit" className="submit-button" disabled={!isEmailAvailable || !isPasswordMatch}>
