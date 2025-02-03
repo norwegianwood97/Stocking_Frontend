@@ -167,9 +167,9 @@
 
 | 역할 | 이름   | 담당  | Email                 | GitHub                                                |
 | ---- | ------ | ----- | --------------------- | ----------------------------------------------------- |
-| 팀장 | 정소이 | BE/FE | writer__soi@naver.com | [soijeongg](https://github.com/soijeongg)             |
+| 팀장 | 최준혁 | BE/FE | jhmhmami@naver.com    | [norwegianwood97](https://github.com/norwegianwood97) |
+| 팀원 | 정소이 | BE/FE | writer__soi@naver.com | [soijeongg](https://github.com/soijeongg)             |
 | 팀원 | 조성현 | BE/FE | cshcho99@gmail.com    | [jovid18](https://github.com/jovid18)                 |
-| 팀원 | 최준혁 | BE/FE | jhmhmami@naver.com    | [norwegianwood97](https://github.com/norwegianwood97) |
 | 팀원 | 윤형식 | BE/FE | fly010905@gmail.com   | [nyeongsik13](https://github.com/nyeongsik13)         |
 
 <details>
